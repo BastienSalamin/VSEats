@@ -25,7 +25,6 @@ namespace ProjetAccess
                     Console.WriteLine(m.ToString());
                     Console.WriteLine("Salut ça va ?");
                     Console.WriteLine("bien et toi?");
-                    Console.WriteLine("Test");
                 }
             }
             else
