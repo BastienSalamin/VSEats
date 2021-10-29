@@ -23,6 +23,7 @@ namespace ProjetAccess
                 foreach (var m in plats)
                 {
                     Console.WriteLine(m.ToString());
+                    Console.WriteLine("Salut ça va ?");
                 }
             }
             else
