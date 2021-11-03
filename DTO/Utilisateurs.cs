@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    class Utilisateurs
+    public class Utilisateurs
     {
         public int IdUtilisateur { get; set; }
         public int IdLocalite { get; set; }
         public string Nom { get; set; }
         public string Prenom { get; set; }
-        public string Login { get; set; }
+        public string Login { get; set; } /*correspond au mail*/
         public string MotDePasse { get; set; }
         public string Adresse { get; set; }
         public string NumTelephone { get; set; }

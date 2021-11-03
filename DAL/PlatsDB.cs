@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using DTO;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -14,9 +15,9 @@ namespace DAL
         {
             Configuration = configuration;
         }
-        public List<Plat> GetPlats()
+        public List<Plats> GetPlats()
         {
-            List<Plat> results = null;
+            List<Plats> results = null;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
 
             try
@@ -33,21 +34,23 @@ namespace DAL
                         while (dr.Read())
                         {
                             if (results == null)
-                                results = new List<Plat>();
+                                results = new List<Plats>();
 
-                            Plat plat = new Plat();
+                            Plats plat = new Plats();
 
-                            plat.IdPlat = (int)dr["IDPLAT"];
+                            plat.IdPlat = (int)dr["IdPlat"];
 
-                            if (dr["NOM"] != DBNull.Value)
-                                plat.Nom = (string)dr["NOM"];
+                            plat.IdRestaurant = (int)dr["IdRestaurant"];
 
-                            if (dr["PRIX"] != DBNull.Value)
-                                plat.Prix = (float)dr["PRIX"];
+                            if (dr["Nom"] != DBNull.Value)
+                                plat.Nom = (string)dr["Nom"];
 
-                            if (dr["DESCRIPTION"] != DBNull.Value)
-                                plat.Description = (string)dr["DESCRIPTION"];
-                            
+                            if (dr["Prix"] != DBNull.Value)
+                                plat.Prix = (float)dr["Prix"];
+
+                            if (dr["Description"] != DBNull.Value)
+                                plat.Description = (string)dr["Description"];
+
                             results.Add(plat);
 
                         }
