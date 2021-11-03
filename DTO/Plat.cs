@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DAL
+namespace DTO
 {
     public class Plat
     {
         public int IdPlat { get; set; }
+        public int IdRestaurant { get;set }
         public string Nom { get; set; }
         public float Prix { get; set; }
         public string Description { get; set; }
@@ -14,6 +15,7 @@ namespace DAL
         public override string ToString()
         {
             return "IdPlat: " + IdPlat +
+                "IdRestaurant: " + IdRestaurant +
                 " Nom du plat: " + Nom +
                 " Prix du plat: " + Prix +
                 " Description: " + Description;
