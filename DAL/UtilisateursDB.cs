@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace DAL
 {
-    public class UtilisateursDB
+    public class UtilisateursDB : IUtilisateursDB
     {
         private IConfiguration Configuration { get; }
 
@@ -17,6 +17,79 @@ namespace DAL
         {
             Configuration = configuration;
         }
+
+        public int UpdateUtilisateur(int idUtilisateur, int idLocalite, string nom, string prenom, string login, string motDePasse, string adresse, string numTelephone)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Update Utilisateurs set idLocalite = @idLocalite,  nom = @nom, prenom = @prenom, login = @login, motDePasse = @motDePasse, adresse = @adresse, numTelephone = @numTelephone WHERE IdUtilisateur = @idUtilisateur";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idUtilisateur", idUtilisateur);
+                    cmd.Parameters.AddWithValue("@idLocalite", idLocalite);
+                    cmd.Parameters.AddWithValue("@nom", nom);
+                    cmd.Parameters.AddWithValue("@prenom", prenom);
+                    cmd.Parameters.AddWithValue("@login", login);
+                    cmd.Parameters.AddWithValue("@motDePasse", motDePasse);
+                    cmd.Parameters.AddWithValue("@adresse", adresse);
+                    cmd.Parameters.AddWithValue("@numTelephone", numTelephone);
+
+                    cn.Open();
+
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
+        public int AddUtilisateur(int idLocalite, string nom, string prenom, string login, string motDePasse, string adresse, string numTelephone)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Insert into Utilisateurs ( IdLocalite, Nom, Prenom, Login, MotDePasse, Adresse, NumTelephone) values (@idLocalite, @nom, @prenom, @login, @motDePasse, @adresse, @numTelephone)";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idLocalite", idLocalite);
+                    cmd.Parameters.AddWithValue("@nom", nom);
+                    cmd.Parameters.AddWithValue("@prenom", prenom);
+                    cmd.Parameters.AddWithValue("@login", login);
+                    cmd.Parameters.AddWithValue("@motDePasse", motDePasse);
+                    cmd.Parameters.AddWithValue("@adresse", adresse);
+                    cmd.Parameters.AddWithValue("@numTelephone", numTelephone);
+
+                    cn.Open();
+
+
+
+                    result = cmd.ExecuteNonQuery();
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
         public List<Utilisateurs> GetUtilisateurs()
         {
             List<Utilisateurs> results = null;

@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace DAL
 {
-    class RevuesDB
+    class RevuesDB : IRevuesDB
     {
         private IConfiguration Configuration { get; }
 
@@ -17,6 +17,44 @@ namespace DAL
         {
             Configuration = configuration;
         }
+
+        public int AddRevue(int idUtilisateur, int idRestaurant, int etoiles, string commentaire)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Insert into Revues (IdUtilisateur, IdRestaurant, Etoiles, Commentaire, Date) values (@idUtilisateur, @idRestaurant, @etoiles, @commentaire, @date)";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idUtilisateur", idUtilisateur);
+                    cmd.Parameters.AddWithValue("@idRestaurant", idRestaurant);
+                    cmd.Parameters.AddWithValue("@etoiles", etoiles);
+                    cmd.Parameters.AddWithValue("@commentaire", commentaire);
+                    cmd.Parameters.AddWithValue("@date", DateTime.Now);
+
+
+                    cn.Open();
+
+
+
+                    result = cmd.ExecuteNonQuery();
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
         public List<Revues> GetRevues()
         {
             List<Revues> results = null;

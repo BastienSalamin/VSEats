@@ -7,7 +7,7 @@ using System.Text;
 
 namespace DAL
 {
-    public class PlatsDB
+    public class PlatsDB : IPlatsDB
     {
         private IConfiguration Configuration { get; }
 

@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace DTO
 {
-    public class LocalitesDB
+    public class LocalitesDB : ILocalitesDB
     {
         private IConfiguration Configuration { get; }
 

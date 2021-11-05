@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace DAL
 {
-    public class CommandesPlatsDB
+    public class CommandesPlatsDB : ICommandesPlatsDB
     {
         private IConfiguration Configuration { get; }
 
@@ -17,6 +17,39 @@ namespace DAL
         {
             Configuration = configuration;
         }
+
+        public int AddQuantite(int idCommande, int idPlat, int quantite)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Insert into CommandesPlats (IdCommande, IdPlat, Quantite) values (@idCommande, @idPlat, @quantite)";
+
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idPlat", idPlat);
+                    cmd.Parameters.AddWithValue("@idCommande", idCommande);
+                    cmd.Parameters.AddWithValue("@quantite", quantite);
+
+                    cn.Open();
+
+                    result = cmd.ExecuteNonQuery();
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
         public List<CommandesPlats> GetCommandesPlats()
         {
             List<CommandesPlats> results = null;

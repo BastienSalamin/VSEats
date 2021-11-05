@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace DAL
 {
-    public class LivreursDB
+    public class LivreursDB : ILivreursDB
     {
         private IConfiguration Configuration { get; }
 
@@ -17,6 +17,34 @@ namespace DAL
         {
             Configuration = configuration;
         }
+
+        public int UpdateDisponibilite(int idLivreur, Boolean disponible)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Update Livreurs set Disponible = @disponible WHERE IdLivreur = @idLivreur";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idLivreur", idLivreur);
+                    cmd.Parameters.AddWithValue("@disponible", disponible);
+
+                    cn.Open();
+
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return result;
+        }
+
         public List<Livreurs> GetLivreurs()
         {
             List<Livreurs> results = null;

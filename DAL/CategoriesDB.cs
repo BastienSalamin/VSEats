@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace DAL
 {
-    public class CategoriesDB
+    public class CategoriesDB : ICategoriesDB
     {
         private IConfiguration Configuration { get; }
 
@@ -17,6 +17,7 @@ namespace DAL
         {
             Configuration = configuration;
         }
+
         public List<Categories> GetCategorie()
         {
             List<Categories> results = null;
