@@ -90,6 +90,116 @@ namespace DAL
             return result;
         }
 
+        //les getters
+
+        public Utilisateurs GetUtilisateurs(int idUtilisateur)
+        {
+            Utilisateurs results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from Utilisateurs WHERE IdUtilisateur = @idUtilisateur";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idUtilisateur", idUtilisateur);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+
+                            results = new Utilisateurs();
+
+                            results.IdUtilisateur = (int)dr["IdUtilisateur"];
+
+                            results.IdLocalite = (int)dr["Localite"];
+
+                            results.Nom = (string)dr["Nom"];
+
+                            results.Prenom = (string)dr["Prenom"];
+
+                            results.Login = (string)dr["Login"];
+
+                            results.MotDePasse = (string)dr["MotDePasse"];
+
+                            results.Adresse = (string)dr["Adresse"];
+
+                            if (dr["NumTelephone"] != DBNull.Value)
+                                results.NumTelephone = (string)dr["NumTelephone"];
+
+
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
+        }
+
+        public Utilisateurs GetUtilisateurs(string login, string motDePasse)
+        {
+            Utilisateurs results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from Utilisateurs WHERE Login = @login AND MotDePasse =  @motDePasse";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@login", login);
+                    cmd.Parameters.AddWithValue("@motDePasse", motDePasse);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+
+                            results = new Utilisateurs();
+
+                            results.IdUtilisateur = (int)dr["IdUtilisateur"];
+
+                            results.IdLocalite = (int)dr["Localite"];
+
+                            results.Nom = (string)dr["Nom"];
+
+                            results.Prenom = (string)dr["Prenom"];
+
+                            results.Login = (string)dr["Login"];
+
+                            results.MotDePasse = (string)dr["MotDePasse"];
+
+                            results.Adresse = (string)dr["Adresse"];
+
+                            if (dr["NumTelephone"] != DBNull.Value)
+                                results.NumTelephone = (string)dr["NumTelephone"];
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
+        }
+
         public List<Utilisateurs> GetUtilisateurs()
         {
             List<Utilisateurs> results = null;

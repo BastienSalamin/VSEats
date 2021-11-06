@@ -7,6 +7,8 @@ namespace DAL
     {
         int AddUtilisateur(int idLocalite, string nom, string prenom, string login, string motDePasse, string adresse, string numTelephone);
         List<Utilisateurs> GetUtilisateurs();
+        Utilisateurs GetUtilisateurs(int idUtilisateur);
+        Utilisateurs GetUtilisateurs(string login, string motDePasse);
         int UpdateUtilisateur(int idUtilisateur, int idLocalite, string nom, string prenom, string login, string motDePasse, string adresse, string numTelephone);
     }
 }

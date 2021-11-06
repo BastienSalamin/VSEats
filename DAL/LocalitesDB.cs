@@ -17,6 +17,52 @@ namespace DTO
         {
             Configuration = configuration;
         }
+
+        //les getters
+
+        public int GetLocalite(int npa)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select IdLocalite from Localites WHERE NPA = @npa";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@npa", npa);
+
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+
+                            Localites localite = new Localites();
+
+                            localite.IdLocalite = (int)dr["IdLocalite"];
+
+                            result = localite.IdLocalite;
+
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
         public List<Localites> GetLocalites()
         {
             List<Localites> results = null;
