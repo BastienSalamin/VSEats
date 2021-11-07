@@ -13,5 +13,15 @@ namespace DTO
         public string Nom { get; set; }
         public string Adresse { get; set; }
         public DateTime DateOuverture{get;set;}
+
+        public override string ToString()
+        {
+            return "IdRestaurant: " + IdRestaurant +
+                " IdLocalite: " + IdLocalite +
+                " Nom du restaurant: " + Nom +
+                " Adresse: " + Adresse +
+                " Date d'ouverture: " + DateOuverture;
+        }
+
     }
 }

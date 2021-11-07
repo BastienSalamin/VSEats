@@ -15,8 +15,8 @@ namespace DTO
         public override string ToString()
         {
             return "IdCommande: " + IdCommande +
-                "IdPlat: " + IdPlat +
-                "Quantite: " + Quantite;
+                " IdPlat: " + IdPlat +
+                " Quantite: " + Quantite;
         }
 
     }

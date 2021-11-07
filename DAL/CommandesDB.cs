@@ -46,7 +46,7 @@ namespace DAL
             return result;
         }
 
-        public int AddCommande(int idUtilisateur, int idLivreur, float prixTotal, int tempsLivraison, DateTime date)
+        public int AddCommande(int idUtilisateur, int idLivreur, double prixTotal, int tempsLivraison, DateTime date)
         {
             int result = 0;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
@@ -114,7 +114,7 @@ namespace DAL
 
                             commande.CommandeLivree = (Boolean)dr["CommandeLivree"];
 
-                            commande.PrixTotal = (float)dr["PrixTotal"];
+                            commande.PrixTotal = (double)dr["PrixTotal"];
 
                             commande.Date = (DateTime)dr["Date"];
 

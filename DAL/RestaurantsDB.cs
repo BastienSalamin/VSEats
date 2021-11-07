@@ -48,7 +48,7 @@ namespace DAL
 
                             restaurant.Adresse = (string)dr["Adresse"];
 
-                            restaurant.DateOuverture = (DateTime)dr["IdLocalite"];
+                            restaurant.DateOuverture = (DateTime)dr["DateOuverture"];
 
                             results.Add(restaurant);
 

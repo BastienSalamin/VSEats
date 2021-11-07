@@ -20,13 +20,13 @@ namespace DTO
         public override string ToString()
         {
             return "IdUtilisateur: " + IdUtilisateur +
-                "IdLocalite: " + IdLocalite +
-                "Nom: " + Nom +
-                "Prenom: " + Prenom +
-                "Login: " + Login +
-                "MotDePass: " + MotDePasse +
-                "Adresse: " + Adresse +
-                "NumTelephone: " + NumTelephone;
+                " IdLocalite: " + IdLocalite +
+                " Nom: " + Nom +
+                " Prenom: " + Prenom +
+                " Login: " + Login +
+                " MotDePass: " + MotDePasse +
+                " Adresse: " + Adresse +
+                " NumTelephone: " + NumTelephone;
         }
 
     }

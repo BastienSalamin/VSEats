@@ -15,8 +15,8 @@ namespace DTO
         public override string ToString()
         {
             return "IdLocalite: " + IdLocalite +
-                "NPA: " + NPA +
-                "Ville: " + Ville;
+                " NPA: " + NPA +
+                " Ville: " + Ville;
         }
 
     }

@@ -70,7 +70,7 @@ namespace DAL
 
                             livreur.IdLivreur = (int)dr["IdLivreur"];
 
-                            livreur.IdLocalite = (int)dr["ÏdLocalite"];
+                            livreur.IdLocalite = (int)dr["IdLocalite"];
 
                             livreur.Nom = (string)dr["Nom"];
 

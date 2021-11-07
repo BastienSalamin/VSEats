@@ -16,9 +16,9 @@ namespace DAL
             Configuration = configuration;
         }
 
-        public float GetPrixPlat(int idPlat)
+        public double GetPrixPlat(int idPlat)
         {
-            int result = 0;
+            double result = 0;
             string connectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {
@@ -31,7 +31,18 @@ namespace DAL
 
                     cn.Open();
 
-                    result = cmd.ExecuteNonQuery();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Plats plat = new Plats();
+
+                            plat.Prix = (double)dr["Prix"];
+
+                            result = plat.Prix;
+
+                        }
+                    }
                 }
             }
             catch (Exception e)
@@ -51,14 +62,26 @@ namespace DAL
             {
                 using (SqlConnection cn = new SqlConnection(connectionString))
                 {
-                    string query = "Select IdPlat from Plats p, Restaurants r WHERE p.IdRestaurant = r.IdRestaurant AND Nom = @nom";
+                    string query = "Select IdPlat from Plats p, Restaurants r WHERE p.IdRestaurant = r.IdRestaurant AND p.Nom = @nom AND r.IdRestaurant = @idRestaurant";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
+                    cmd.Parameters.AddWithValue("@idRestaurant", idRestaurant);
                     cmd.Parameters.AddWithValue("@nom", nom);
 
                     cn.Open();
 
-                    result = cmd.ExecuteNonQuery();
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Plats plat = new Plats();
+
+                            plat.IdPlat = (int)dr["IdPlat"];
+
+                            result = plat.IdPlat;
+
+                        }
+                    }
                 }
             }
             catch (Exception e)
@@ -100,7 +123,7 @@ namespace DAL
                                 plat.Nom = (string)dr["Nom"];
 
                             if (dr["Prix"] != DBNull.Value)
-                                plat.Prix = (float)dr["Prix"];
+                                plat.Prix = (double)dr["Prix"];
 
                             if (dr["Description"] != DBNull.Value)
                                 plat.Description = (string)dr["Description"];

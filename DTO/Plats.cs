@@ -9,7 +9,7 @@ namespace DTO
         public int IdPlat { get; set; }
         public int IdRestaurant { get; set; }
         public string Nom { get; set; }
-        public float Prix { get; set; }
+        public double Prix { get; set; }
         public string Description { get; set; }
 
         public override string ToString()
@@ -17,7 +17,7 @@ namespace DTO
             return "IdPlat: " + IdPlat +
                 "IdRestaurant: " + IdRestaurant +
                 " Nom du plat: " + Nom +
-                " Prix du plat: " + Prix +
+                " Prix du plat: " + Prix + " CHF" +
                 " Description: " + Description;
         }
     }

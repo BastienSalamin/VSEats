@@ -18,11 +18,11 @@ namespace DTO
         public override string ToString()
         {
             return "IdRevue: " + IdRevue +
-                "IdUtilisateur: " + IdUtilisateur +
-                "IdRestaurant: " + IdRestaurant +
-                "Etoiles: " + Etoiles +
-                "Commentaire: " + Commentaire +
-                "Date: " + Date;
+                " IdUtilisateur: " + IdUtilisateur +
+                " IdRestaurant: " + IdRestaurant +
+                " Etoiles: " + Etoiles +
+                " Commentaire: " + Commentaire +
+                " Date: " + Date;
         }
 
     }

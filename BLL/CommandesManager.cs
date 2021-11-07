@@ -38,14 +38,13 @@ namespace BLL
         //dont: le prixTotal à calculer,
         //
         //Remarque: l'utilisateur choisi la DateTime à laquelle il veut se faire livrer
-        public void Order(int idUtilisateur, int idLivreur, float prixTotal, DateTime date)
+        public void Order(int idUtilisateur, int idLivreur, double prixTotal, DateTime date)
         {
-   
-            bool commandeLivree = false;
+            TimeSpan t = date - DateTime.Now;
 
-            int tempsLivraison = date - DateTime.Now;
+            int tempsLivraison = (int) t.TotalMinutes;
 
-            CommandesDb.AddCommande(idUtilisateur, idLivreur, commandeLivree, prixTotal, date, tempsLivraison);
+            CommandesDb.AddCommande(idUtilisateur, idLivreur, prixTotal, tempsLivraison, date);
         }
 
         //update
@@ -53,7 +52,7 @@ namespace BLL
         public void updateDelivery(int idCommande)
         {
 
-            commandesDb.UpdateCommandeLivree(idCommande);
+            CommandesDb.UpdateCommandeLivree(idCommande);
         }
 
 
@@ -61,7 +60,7 @@ namespace BLL
 
         public List<Commandes> GetCommandes()
         {
-            return commandesDb.GetCommandes();
+            return CommandesDb.GetCommandes();
         }
 
     }

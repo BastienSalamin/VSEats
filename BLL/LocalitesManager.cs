@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    class LocalitesManager
+    public class LocalitesManager
     {
         // Création de références privées
         private ILocalitesDB LocalitesDb { get; }
