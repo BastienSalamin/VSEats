@@ -1,6 +1,6 @@
 ﻿using System;
-using DAL;
 using DTO;
+using DAL;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,25 +9,31 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class CategoriesManager
+    class LocalitesManager
     {
         // Création de références privées
-        private ICategoriesDB CategoriesDb { get; }
+        private ILocalitesDB LocalitesDb { get; }
 
         // Création du constructeur pour instancier la DAL
-        public CategoriesManager(IConfiguration configuration)
+        public LocalitesManager(IConfiguration configuration)
         {
-            CategoriesDb = new CategoriesDB(configuration);
 
+            LocalitesDb = new LocalitesDB(configuration);
         }
 
         //liste des méthodes utilisateurs
 
         //les getters
 
-        public List<Categories> GetCategories()
+        public int GetLocalite(int npa)
         {
-            return CategoriesDb.GetCategorie();
+            return LocalitesDb.GetLocalite(npa);
         }
+
+        public List<Localites> GetLocalites()
+        {
+            return LocalitesDb.GetLocalites();
+        }
+
     }
 }

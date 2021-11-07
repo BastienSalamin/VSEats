@@ -9,25 +9,24 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class CategoriesManager
+    public class CommandesPlatsManager
     {
         // Création de références privées
-        private ICategoriesDB CategoriesDb { get; }
+        private ICommandesPlatsDB CommandesPlatsDb { get; }
 
         // Création du constructeur pour instancier la DAL
-        public CategoriesManager(IConfiguration configuration)
+        public CommandesPlatsManager(IConfiguration configuration)
         {
-            CategoriesDb = new CategoriesDB(configuration);
-
+            CommandesPlatsDb = new CommandesPlatsDB(configuration);
+            
         }
 
         //liste des méthodes utilisateurs
 
         //les getters
-
-        public List<Categories> GetCategories()
+        public List<CommandesPlats> GetCommandesPlats()
         {
-            return CategoriesDb.GetCategorie();
+            return CommandesPlatsDb.GetCommandesPlats();
         }
     }
 }

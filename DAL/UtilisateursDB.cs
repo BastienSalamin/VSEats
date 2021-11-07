@@ -118,7 +118,7 @@ namespace DAL
 
                             results.IdUtilisateur = (int)dr["IdUtilisateur"];
 
-                            results.IdLocalite = (int)dr["Localite"];
+                            results.IdLocalite = (int)dr["IdLocalite"];
 
                             results.Nom = (string)dr["Nom"];
 
@@ -173,7 +173,7 @@ namespace DAL
 
                             results.IdUtilisateur = (int)dr["IdUtilisateur"];
 
-                            results.IdLocalite = (int)dr["Localite"];
+                            results.IdLocalite = (int)dr["IdLocalite"];
 
                             results.Nom = (string)dr["Nom"];
 
@@ -225,7 +225,7 @@ namespace DAL
 
                             utilisateur.IdUtilisateur = (int)dr["IdUtilisateur"];
 
-                            utilisateur.IdLocalite = (int)dr["Localite"];
+                            utilisateur.IdLocalite = (int)dr["IdLocalite"];
 
                             utilisateur.Nom = (string)dr["Nom"];
 

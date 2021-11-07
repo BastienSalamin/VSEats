@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 
 namespace DAL
 {
-    class RestaurantsDB : IRestaurantsDB
+    public class RestaurantsDB : IRestaurantsDB
     {
         private IConfiguration Configuration { get; }
 

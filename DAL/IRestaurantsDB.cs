@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DAL
 {
-    interface IRestaurantsDB
+    public interface IRestaurantsDB
     {
         List<Restaurants> GetRestaurants();
     }

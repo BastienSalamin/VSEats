@@ -15,6 +15,60 @@ namespace DAL
         {
             Configuration = configuration;
         }
+
+        public float GetPrixPlat(int idPlat)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    String query = "SELECT Prix FROM PLATS WHERE IdPlat = @idPlat";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@IdPlat", idPlat);
+
+                    cn.Open();
+
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
+        public int GetPlatID(string nom, int idRestaurant)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select IdPlat from Plats p, Restaurants r WHERE p.IdRestaurant = r.IdRestaurant AND Nom = @nom";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@nom", nom);
+
+                    cn.Open();
+
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
         public List<Plats> GetPlats()
         {
             List<Plats> results = null;

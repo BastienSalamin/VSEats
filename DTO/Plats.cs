@@ -7,7 +7,7 @@ namespace DTO
     public class Plats
     {
         public int IdPlat { get; set; }
-        public int IdRestaurant { get;set }
+        public int IdRestaurant { get; set; }
         public string Nom { get; set; }
         public float Prix { get; set; }
         public string Description { get; set; }

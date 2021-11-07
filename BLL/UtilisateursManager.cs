@@ -11,41 +11,41 @@ namespace BLL
 {
     public class UtilisateursManager
     {
-        // Création de deux références privées
-        private IUtilisateursDB utilisateursDb { get; }
-        private ILocalitesDB localitesDb { get; }
+        // Création de références privées
+        private IUtilisateursDB UtilisateursDb { get; }
+        private ILocalitesDB LocalitesDb { get; }
 
 
         // Création du constructeur pour instancier la DAL
         public UtilisateursManager(IConfiguration configuration)
         {
-            utilisateursDb = new UtilisateursDB(configuration);
-            
+            UtilisateursDb = new UtilisateursDB(configuration);
+            LocalitesDb = new LocalitesDB(configuration);
         }
 
 
         //liste des méthodes utilisateurs
 
 
-        public int subscribe(int npa, string nom, string prenom, string login, string motDePasse, string adresse, string numTelephone)
+        public void Subscribe(int npa, string nom, string prenom, string login, string motDePasse, string adresse, string numTelephone)
         {
 
-            var idLocalite = localitesDb.GetLocalite(npa);
+            var idLocalite = LocalitesDb.GetLocalite(npa);
 
-            return utilisateursDb.AddUtilisateur( idLocalite,  nom,  prenom,  login,  motDePasse,  adresse,  numTelephone);
+            UtilisateursDb.AddUtilisateur( idLocalite,  nom,  prenom,  login,  motDePasse,  adresse,  numTelephone);
         }
 
-        public Boolean canConnect(string email, string motDePasse)
+        public Boolean CanConnect(string email, string motDePasse)
         {
 
             Boolean canConnect;
 
-            var utilisateur = utilisateursDb.GetUtilisateurs(email, motDePasse);
+            var utilisateur = UtilisateursDb.GetUtilisateurs(email, motDePasse);
 
-            if (utilisateur.Login == email)
+            if (utilisateur.Login.Contains(email))
             {
 
-                if(utilisateur.MotDePasse == motDePasse)
+                if(utilisateur.MotDePasse.Contains(motDePasse))
                 {
                     return canConnect = true;
                 }
@@ -64,20 +64,20 @@ namespace BLL
         //les getters
         public List<Utilisateurs> GetUtilisateurs()
         {
-            return utilisateursDb.GetUtilisateurs();
+            return UtilisateursDb.GetUtilisateurs();
         }
 
         public Utilisateurs GetUtilisateurs(string email, string motDePasse)
         {
 
-            return utilisateursDb.GetUtilisateurs(email, motDePasse);
+            return UtilisateursDb.GetUtilisateurs(email, motDePasse);
         }
 
         public Utilisateurs GetUserId(int idUtilisateur)
         {
             
 
-            return utilisateursDb.GetUtilisateurs(idUtilisateur);
+            return UtilisateursDb.GetUtilisateurs(idUtilisateur);
         }
     }
 }
