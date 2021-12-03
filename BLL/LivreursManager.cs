@@ -9,15 +9,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class LivreursManager
+    public class LivreursManager : ILivreursManager
     {
         // Création de références privées
         private ILivreursDB LivreursDb { get; }
 
         // Création du constructeur pour instancier la DAL
-        public LivreursManager(IConfiguration configuration)
+        public LivreursManager(ILivreursDB livreursDb)
         {
-            LivreursDb = new LivreursDB(configuration);
+            LivreursDb = livreursDb;
         }
 
         //liste des méthodes utilisateurs

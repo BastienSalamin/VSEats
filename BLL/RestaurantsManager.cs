@@ -9,15 +9,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class RestaurantsManager
+    public class RestaurantsManager : IRestaurantsManager
     {
         // Création de références privées
         private IRestaurantsDB RestaurantsDb { get; }
 
         //Création du constructeur pour instancier la DAL
-        public RestaurantsManager(IConfiguration configuration)
+        public RestaurantsManager(IRestaurantsDB restaurantsDb)
         {
-            RestaurantsDb = new RestaurantsDB(configuration);
+            RestaurantsDb = restaurantsDb;
         }
 
         //liste des méthodes

@@ -9,24 +9,24 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class CommandesManager
+    public class CommandesManager : ICommandesManager
     {
         // Création de deux références privées
         private ICommandesDB CommandesDb { get; }
         private IUtilisateursDB UtilisateursDb { get; }
         private ILivreursDB LivreursDb { get; }
         private IPlatsDB PlatsDb { get; }
-        private ICommandesPlatsDB CommandesPlatsDb{get;}
+        private ICommandesPlatsDB CommandesPlatsDb { get; }
 
 
         // Création du constructeur pour instancier la DAL
-        public CommandesManager(IConfiguration configuration)
+        public CommandesManager(ICommandesDB commandesDb, IUtilisateursDB utilisateursDb, ILivreursDB livreursDb, IPlatsDB platsDb, ICommandesPlatsDB commandesPlatsDb)
         {
-            CommandesDb = new CommandesDB(configuration);
-            UtilisateursDb = new UtilisateursDB(configuration);
-            LivreursDb = new LivreursDB(configuration);
-            PlatsDb = new PlatsDB(configuration);
-            CommandesPlatsDb = new CommandesPlatsDB(configuration);
+            CommandesDb = commandesDb;
+            UtilisateursDb = utilisateursDb;
+            LivreursDb = livreursDb;
+            PlatsDb = platsDb;
+            CommandesPlatsDb = commandesPlatsDb;
         }
 
         //liste des méthodes utilisateurs
@@ -42,7 +42,7 @@ namespace BLL
         {
             TimeSpan t = date - DateTime.Now;
 
-            int tempsLivraison = (int) t.TotalMinutes;
+            int tempsLivraison = (int)t.TotalMinutes;
 
             CommandesDb.AddCommande(idUtilisateur, idLivreur, prixTotal, tempsLivraison, date);
         }

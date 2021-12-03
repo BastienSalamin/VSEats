@@ -9,16 +9,16 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class CommandesPlatsManager
+    public class CommandesPlatsManager : ICommandesPlatsManager
     {
         // Création de références privées
         private ICommandesPlatsDB CommandesPlatsDb { get; }
 
         // Création du constructeur pour instancier la DAL
-        public CommandesPlatsManager(IConfiguration configuration)
+        public CommandesPlatsManager(ICommandesPlatsDB commandesPlatsDb)
         {
-            CommandesPlatsDb = new CommandesPlatsDB(configuration);
-            
+            CommandesPlatsDb = commandesPlatsDb;
+
         }
 
         //liste des méthodes utilisateurs

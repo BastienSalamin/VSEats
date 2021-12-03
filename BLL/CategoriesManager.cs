@@ -9,15 +9,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class CategoriesManager
+    public class CategoriesManager : ICategoriesManager
     {
         // Création de références privées
         private ICategoriesDB CategoriesDb { get; }
 
         // Création du constructeur pour instancier la DAL
-        public CategoriesManager(IConfiguration configuration)
+        public CategoriesManager(ICategoriesDB categoriesDb)
         {
-            CategoriesDb = new CategoriesDB(configuration);
+            CategoriesDb = categoriesDb;
 
         }
 

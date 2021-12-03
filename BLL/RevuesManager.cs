@@ -9,15 +9,15 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class RevuesManager
+    public class RevuesManager : IRevuesManager
     {
         // Création de références privées
         private IRevuesDB RevuesDb { get; }
 
         // Création du constructeur pour instancier la DAL
-        public RevuesManager(IConfiguration configuration)
+        public RevuesManager(IRevuesDB revuesDb)
         {
-            RevuesDb = new RevuesDB(configuration);
+            RevuesDb = revuesDb;
         }
 
         //liste des méthodes

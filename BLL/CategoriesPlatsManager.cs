@@ -9,16 +9,16 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class CategoriesPlatsManager
+    public class CategoriesPlatsManager : ICategoriesPlatsManager
     {
 
         // Création de deux références privées
         private ICategoriesPlatsDB CategoriesPlatsDb { get; }
 
         // Création du constructeur pour instancier la DAL
-        public CategoriesPlatsManager(IConfiguration configuration)
+        public CategoriesPlatsManager(ICategoriesPlatsDB categoriesPlatsDb)
         {
-            CategoriesPlatsDb = new CategoriesPlatsDB(configuration);
+            CategoriesPlatsDb =categoriesPlatsDb;
         }
 
         //liste des méthodes utilisateurs

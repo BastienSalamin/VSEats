@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class UtilisateursManager
+    public class UtilisateursManager : IUtilisateursManager
     {
         // Création de références privées
         private IUtilisateursDB UtilisateursDb { get; }
@@ -17,10 +17,10 @@ namespace BLL
 
 
         // Création du constructeur pour instancier la DAL
-        public UtilisateursManager(IConfiguration configuration)
+        public UtilisateursManager(IUtilisateursDB utilisateursDb, ILocalitesDB localitesDb)
         {
-            UtilisateursDb = new UtilisateursDB(configuration);
-            LocalitesDb = new LocalitesDB(configuration);
+            UtilisateursDb = utilisateursDb;
+            LocalitesDb = localitesDb;
         }
 
 
@@ -32,7 +32,7 @@ namespace BLL
 
             var idLocalite = LocalitesDb.GetLocalite(npa);
 
-            UtilisateursDb.AddUtilisateur( idLocalite,  nom,  prenom,  login,  motDePasse,  adresse,  numTelephone);
+            UtilisateursDb.AddUtilisateur(idLocalite, nom, prenom, login, motDePasse, adresse, numTelephone);
         }
 
         public Boolean CanConnect(string email, string motDePasse)
@@ -45,7 +45,7 @@ namespace BLL
             if (utilisateur.Login.Contains(email))
             {
 
-                if(utilisateur.MotDePasse.Contains(motDePasse))
+                if (utilisateur.MotDePasse.Contains(motDePasse))
                 {
                     return canConnect = true;
                 }
@@ -75,7 +75,7 @@ namespace BLL
 
         public Utilisateurs GetUserId(int idUtilisateur)
         {
-            
+
 
             return UtilisateursDb.GetUtilisateurs(idUtilisateur);
         }

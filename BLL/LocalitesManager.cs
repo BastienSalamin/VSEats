@@ -9,16 +9,16 @@ using Microsoft.Extensions.Configuration;
 
 namespace BLL
 {
-    public class LocalitesManager
+    public class LocalitesManager : ILocalitesManager
     {
         // Création de références privées
         private ILocalitesDB LocalitesDb { get; }
 
         // Création du constructeur pour instancier la DAL
-        public LocalitesManager(IConfiguration configuration)
+        public LocalitesManager(ILocalitesDB localitesDb)
         {
 
-            LocalitesDb = new LocalitesDB(configuration);
+            LocalitesDb = localitesDb;
         }
 
         //liste des méthodes utilisateurs
