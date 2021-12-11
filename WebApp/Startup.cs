@@ -1,3 +1,5 @@
+using BLL;
+using DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,12 +26,26 @@ namespace WebApp
         public void ConfigureServices(IServiceCollection services)
         {
 
-            /*Mettre tous les managers et DB*/
-
-            services.AddScoped<IMemberManager, MemberManager>();
-            services.AddScoped<IMemberDB, MemberDB>();
-            services.AddScoped<IMessageManager, MessageManager>();
-            services.AddScoped<IMessageDB, MessageDB>();
+            services.AddScoped<ICategoriesDB, CategoriesDB>();
+            services.AddScoped<ICategoriesManager, CategoriesManager>();
+            services.AddScoped<ICategoriesPlatsDB, CategoriesPlatsDB>();
+            services.AddScoped<ICategoriesPlatsManager, CategoriesPlatsManager>();
+            services.AddScoped<ICommandesDB, CommandesDB>();
+            services.AddScoped<ICommandesManager, CommandesManager>();
+            services.AddScoped<ICommandesPlatsDB, CommandesPlatsDB>();
+            services.AddScoped<ICommandesPlatsManager, CommandesPlatsManager>();
+            services.AddScoped<ILivreursDB, LivreursDB>();
+            services.AddScoped<ILivreursManager, LivreursManager>();
+            services.AddScoped<ILocalitesDB,LocalitesDB>();
+            services.AddScoped<ILocalitesManager, LocalitesManager>();
+            services.AddScoped<IPlatsDB, PlatsDB>();
+            services.AddScoped<IPlatsManager, PlatsManager>();
+            services.AddScoped<IRestaurantsDB, RestaurantsDB>();
+            services.AddScoped<IRestaurantsManager, RestaurantsManager>();
+            services.AddScoped<IRevuesDB, RevuesDB>();
+            services.AddScoped<IRevuesManager, RevuesManager>();
+            services.AddScoped<IUtilisateursDB, UtilisateursDB>();
+            services.AddScoped<IUtilisateursManager, UtilisateursManager>();
 
             services.AddControllersWithViews();
         }

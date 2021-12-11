@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using System.Data.SqlClient;
 
-namespace DTO
+namespace DAL
 {
     public class LocalitesDB : ILocalitesDB
     {
