@@ -34,7 +34,7 @@ namespace WebApp.Controllers
 
                 if (utilisateur != null)
                 {
-                    return RedirectToAction("Privacy", "Home");
+                    return RedirectToAction("Home", "Index");
                 }
                 else
                 {

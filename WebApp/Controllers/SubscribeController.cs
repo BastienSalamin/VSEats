@@ -22,12 +22,21 @@ namespace WebApp.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(SubscribeVM subscribeVM)
         {
             if (ModelState.IsValid)
             {
-                UtilisateursManager.Subscribe();
+                UtilisateursManager.Subscribe(subscribeVM.Npa, subscribeVM.Nom, subscribeVM.Prenom, subscribeVM.Login, subscribeVM.MotDePasse, subscribeVM.Adresse, subscribeVM.NumTelephone);
+                return RedirectToAction("Home", "Index");
             }
+            else
+            {
+                ModelState.AddModelError("", "Erreur lors de l'insertion !");
+            }
+
+            return View(subscribeVM);
         }
     }
 }
