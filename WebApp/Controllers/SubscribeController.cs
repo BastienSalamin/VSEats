@@ -41,7 +41,7 @@ namespace WebApp.Controllers
                 }
                 
                 UtilisateursManager.Subscribe(subscribeVM.Npa, subscribeVM.Nom, subscribeVM.Prenom, subscribeVM.Login, subscribeVM.MotDePasse, subscribeVM.Adresse, subscribeVM.NumTelephone);
-                return RedirectToAction("Home", "Index");
+                return RedirectToAction("Index", "Home");
                 
             }
             else
