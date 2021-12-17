@@ -28,8 +28,21 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                // vérifier qu'il n'y ait pas d'utilisateurs avec le même login
+                var listeUsers = UtilisateursManager.GetUtilisateurs();
+
+                foreach (var user in listeUsers)
+                {
+                    if(user.Login.Contains(subscribeVM.Login))
+                    {
+                        ModelState.AddModelError("", "Cet e-mail est déjà utilisé !");
+                        return View(subscribeVM);
+                    }
+                }
+                
                 UtilisateursManager.Subscribe(subscribeVM.Npa, subscribeVM.Nom, subscribeVM.Prenom, subscribeVM.Login, subscribeVM.MotDePasse, subscribeVM.Adresse, subscribeVM.NumTelephone);
                 return RedirectToAction("Home", "Index");
+                
             }
             else
             {

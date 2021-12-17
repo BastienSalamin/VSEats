@@ -15,12 +15,14 @@ namespace WebApp.Models
         [Required]
         public string Prenom { get; set; }
         [Required]
+        [EmailAddress]
         public string Login { get; set; }
         [Required]
         public string MotDePasse { get; set; }
         [Required]
         public string Adresse { get; set; }
         [Required]
+        [StringLength(10)]
         public string NumTelephone { get; set; }
     }
 }
