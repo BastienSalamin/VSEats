@@ -147,6 +147,46 @@ namespace DAL
             return results;
         }
 
+        public int GetIdUtilisateurs(string login, string motDePasse)
+        {
+            Utilisateurs util = null;
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select IdUtilisateur from Utilisateurs WHERE Login = @login AND MotDePasse =  @motDePasse";
+
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@login", login);
+                    cmd.Parameters.AddWithValue("@motDePasse", motDePasse);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            util = new Utilisateurs();
+
+                            util.IdUtilisateur = (int)dr["IdUtilisateur"];
+
+                            result = util.IdUtilisateur;
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
         public Utilisateurs GetUtilisateurs(string login, string motDePasse)
         {
             Utilisateurs results = null;

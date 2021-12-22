@@ -6,6 +6,7 @@ namespace DAL
     public interface IUtilisateursDB
     {
         int AddUtilisateur(int idLocalite, string nom, string prenom, string login, string motDePasse, string adresse, string numTelephone);
+        int GetIdUtilisateurs(string login, string motDePasse);
         List<Utilisateurs> GetUtilisateurs();
         Utilisateurs GetUtilisateurs(int idUtilisateur);
         Utilisateurs GetUtilisateurs(string login, string motDePasse);

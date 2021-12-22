@@ -22,6 +22,27 @@ namespace WebApp.Controllers
             return View();
         }
 
+        //pour Edit les données
+        public IActionResult Edit(int id)
+        {
+            var util = UtilisateursManager.GetUserId(id);
+
+            return View(util);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(SubscribeVM subscribeVM)
+        {
+            if (ModelState.IsValid)
+            {
+                UtilisateursManager.Update(subscribeVM.Npa,subscribeVM.Nom,subscribeVM.Prenom,subscribeVM.Login,subscribeVM.MotDePasse,subscribeVM.Adresse,subscribeVM.NumTelephone);
+                return RedirectToAction("Index","Home");
+            }
+
+            return View(subscribeVM);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Index(SubscribeVM subscribeVM)
@@ -42,7 +63,7 @@ namespace WebApp.Controllers
                 
                 UtilisateursManager.Subscribe(subscribeVM.Npa, subscribeVM.Nom, subscribeVM.Prenom, subscribeVM.Login, subscribeVM.MotDePasse, subscribeVM.Adresse, subscribeVM.NumTelephone);
                 return RedirectToAction("Index", "Home");
-                
+
             }
             else
             {

@@ -79,5 +79,16 @@ namespace BLL
 
             return UtilisateursDb.GetUtilisateurs(idUtilisateur);
         }
+
+        //Update
+        public int Update(int npa, string nom, string prenom, string login, string motDePasse, string adresse, string numTelephone)
+        {
+
+            var idUtilisateur = UtilisateursDb.GetIdUtilisateurs(login, motDePasse);
+            var idLocalite = LocalitesDb.GetLocalite(npa);
+
+            return UtilisateursDb.UpdateUtilisateur(idUtilisateur, idLocalite, nom, prenom, login, motDePasse, adresse, numTelephone);
+        }
+
     }
 }
