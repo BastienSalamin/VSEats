@@ -24,15 +24,14 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Index(LoginVM loginWm)
         {
             if (ModelState.IsValid)
             {
+                var connexion = UtilisateursManager.CanConnect(loginWm.Email,loginWm.MotDePasse);
 
-                var utilisateur = UtilisateursManager.GetUtilisateurs(loginWm.Email,loginWm.MotDePasse);
-
-
-                if (utilisateur != null)
+                if (connexion == true)
                 {
                     return RedirectToAction("Index", "Home");
                 }

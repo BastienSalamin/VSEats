@@ -42,13 +42,20 @@ namespace BLL
 
             var utilisateur = UtilisateursDb.GetUtilisateurs(email, motDePasse);
 
-            if (utilisateur.Login.Contains(email))
+            if (utilisateur != null)
             {
-
-                if (utilisateur.MotDePasse.Contains(motDePasse))
+                if (utilisateur.Login.Contains(email))
                 {
-                    return canConnect = true;
+                    if (utilisateur.MotDePasse.Contains(motDePasse))
+                    {
+                        return canConnect = true;
+                    }
+                    else
+                    {
+                        return canConnect = false;
+                    }
                 }
+                
                 else
                 {
                     return canConnect = false;
