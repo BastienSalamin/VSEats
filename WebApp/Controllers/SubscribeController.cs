@@ -20,7 +20,15 @@ namespace WebApp.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var id = HttpContext.Request.Cookies["IdUtilisateur"];
+            if(id == null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
@@ -42,6 +50,11 @@ namespace WebApp.Controllers
                 }
 
                 UtilisateursManager.Subscribe(subscribeVM.Npa, subscribeVM.Nom, subscribeVM.Prenom, subscribeVM.Login, subscribeVM.MotDePasse, subscribeVM.Adresse, subscribeVM.NumTelephone);
+                
+                // Création du cookie utilisateur
+                var userCookie = UtilisateursManager.GetUtilisateurs(subscribeVM.Login, subscribeVM.MotDePasse);
+                HttpContext.Response.Cookies.Append("IdUtilisateur", userCookie.IdUtilisateur.ToString());
+
                 return RedirectToAction("Index", "Home");
 
             }
@@ -54,30 +67,42 @@ namespace WebApp.Controllers
         }
 
         //pour Edit les données
-        public IActionResult Edit(int id)
+        public IActionResult Edit()
         {
-            var util = UtilisateursManager.GetUserId(id);
-            var localites = LocalitesManager.GetLocalites();
-            int npa = 0;
-
-            foreach (var localite in localites)
+            var id = HttpContext.Request.Cookies["IdUtilisateur"];
+            if(id != null)
             {
-                if(localite.IdLocalite == util.IdLocalite)
+                int idUser = Int32.Parse(id);
+
+                var util = UtilisateursManager.GetUserId(idUser);
+                var localites = LocalitesManager.GetLocalites();
+                int npa = 0;
+
+                foreach (var localite in localites)
                 {
-                    npa = localite.NPA;
+                    if (localite.IdLocalite == util.IdLocalite)
+                    {
+                        npa = localite.NPA;
+                    }
                 }
+
+                SubscribeVM membre = new SubscribeVM();
+                membre.Npa = npa;
+                membre.Nom = util.Nom;
+                membre.Prenom = util.Prenom;
+                membre.Login = util.Login;
+                membre.MotDePasse = util.MotDePasse;
+                membre.Adresse = util.Adresse;
+                membre.NumTelephone = util.NumTelephone;
+
+                return View(membre);
+
             }
-
-            SubscribeVM membre = new SubscribeVM();
-            membre.Npa = npa;
-            membre.Nom = util.Nom;
-            membre.Prenom = util.Prenom;
-            membre.Login = util.Login;
-            membre.MotDePasse = util.MotDePasse;
-            membre.Adresse = util.Adresse;
-            membre.NumTelephone = util.NumTelephone;
-
-            return View(membre);
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            
         }
 
         [HttpPost]

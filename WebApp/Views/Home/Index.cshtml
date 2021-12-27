@@ -1,8 +1,18 @@
-﻿@{
+﻿@model DTO.Utilisateurs
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Bonjour !</h1>
-    <p>EST-CE QUE VOUS ALLEZ BIEN ?!?!?!</p>
+    @if (Model != null)
+    {
+        <h1 class="display-4">Bonjour @Model.Prenom @Model.Nom !</h1>
+    }
+    else
+    {
+        <h1 class="display-4">Bonjour !</h1>
+    }
+    <p>Bienvenue sur VS Eats !</p>
+    <p>La plateforme en ligne pour commander chez vos restaurants favoris de votre ville !</p>
 </div>

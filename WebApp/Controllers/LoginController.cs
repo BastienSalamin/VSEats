@@ -33,6 +33,10 @@ namespace WebApp.Controllers
 
                 if (connexion == true)
                 {
+                    // Création du cookie utilisateur
+                    var user = UtilisateursManager.GetUtilisateurs(loginWm.Email, loginWm.MotDePasse);
+                    HttpContext.Response.Cookies.Append("IdUtilisateur", user.IdUtilisateur.ToString());
+
                     return RedirectToAction("Index", "Home");
                 }
                 else
