@@ -48,7 +48,6 @@ namespace BLL
         }
 
         //update
-
         public void updateDelivery(int idCommande)
         {
 
@@ -57,7 +56,6 @@ namespace BLL
 
 
         //les getters
-
         public List<Commandes> GetCommandes()
         {
             return CommandesDb.GetCommandes();

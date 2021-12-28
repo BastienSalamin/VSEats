@@ -24,7 +24,6 @@ namespace BLL
         //liste des méthodes utilisateurs
 
         //les getters
-
         public int GetLocalite(int npa)
         {
             return LocalitesDb.GetLocalite(npa);

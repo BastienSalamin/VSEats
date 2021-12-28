@@ -24,7 +24,6 @@ namespace BLL
         //liste des méthodes utilisateurs
 
         //les getters
-
         public List<Categories> GetCategories()
         {
             return CategoriesDb.GetCategorie();

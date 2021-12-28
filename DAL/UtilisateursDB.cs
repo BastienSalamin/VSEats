@@ -91,7 +91,6 @@ namespace DAL
         }
 
         //les getters
-
         public Utilisateurs GetUtilisateurs(int idUtilisateur)
         {
             Utilisateurs results = null;

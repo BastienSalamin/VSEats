@@ -1,7 +1,7 @@
 ﻿@model WebApp.Models.LoginVM
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Connexion";
 }
 
 <h1>Connexion</h1>
@@ -25,6 +25,10 @@
             </div>
         </form>
     </div>
+</div>
+
+<div>
+    <p>Pas de compte ? <a asp-controller="Subscribe" asp-action="Index">Créez-en un maintenant !</a></p>
 </div>
 
 @section Scripts {

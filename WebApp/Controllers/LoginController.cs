@@ -41,12 +41,19 @@ namespace WebApp.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Woops! Email or Password is wrong!");
+                    ModelState.AddModelError("", "Oups ! L'e-mail ou le mot de passe est faux !");
                 }
 
             }
 
             return View(loginWm);
+        }
+
+        public IActionResult Unlog()
+        {
+            HttpContext.Response.Cookies.Delete("IdUtilisateur");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

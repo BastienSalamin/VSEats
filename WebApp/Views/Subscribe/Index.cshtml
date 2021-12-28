@@ -1,7 +1,7 @@
 ﻿@model WebApp.Models.SubscribeVM
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Inscription";
 }
 
 <h1>Inscription</h1>
@@ -51,6 +51,10 @@
             </div>
         </form>
     </div>
+</div>
+
+<div>
+    <p>Déjà un compte ? <a asp-controller="Login" asp-action="Index">Connectez-vous !</a></p>
 </div>
 
 @section Scripts {
