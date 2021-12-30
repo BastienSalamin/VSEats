@@ -100,7 +100,7 @@ namespace WebApp.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Login");
             }
             
         }

@@ -63,5 +63,54 @@ namespace DAL
 
             return results;
         }
+
+        public List<Restaurants> GetRestaurants(int idLocalite)
+        {
+            List<Restaurants> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from Restaurants WHERE IdLocalite = @idLocalite";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@IdLocalite", idLocalite);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Restaurants>();
+
+                            Restaurants restaurant = new Restaurants();
+
+                            restaurant.IdRestaurant = (int)dr["IdRestaurant"];
+
+                            restaurant.IdLocalite = (int)dr["IdLocalite"];
+
+                            restaurant.Nom = (string)dr["Nom"];
+
+                            restaurant.Adresse = (string)dr["Adresse"];
+
+                            restaurant.DateOuverture = (DateTime)dr["DateOuverture"];
+
+                            results.Add(restaurant);
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
+        }
     }
 }

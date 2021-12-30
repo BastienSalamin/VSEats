@@ -10,15 +10,80 @@ namespace WebApp.Controllers
     public class RestaurantsController : Controller
     {
         private IRestaurantsManager RestaurantsManager { get; }
+        private IUtilisateursManager UtilisateursManager { get; }
+        private IPlatsManager PlatsManager { get; }
 
-        public RestaurantsController(IRestaurantsManager restaurantsManager)
+        public RestaurantsController(IRestaurantsManager restaurantsManager, IUtilisateursManager utilisateursManager, IPlatsManager platsManager)
         {
             RestaurantsManager = restaurantsManager;
+            UtilisateursManager = utilisateursManager;
+            PlatsManager = platsManager;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var id = HttpContext.Request.Cookies["IdUtilisateur"];
+
+            if(id != null)
+            {
+                int idUser = Int32.Parse(id);
+
+                var util = UtilisateursManager.GetUserId(idUser);
+
+                var idLocalite = util.IdLocalite;
+
+                var restaurants = RestaurantsManager.GetRestaurants(idLocalite);
+
+                if(restaurants != null)
+                {
+                    return View(restaurants);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        public IActionResult Details(int id)
+        {
+            var idUser = HttpContext.Request.Cookies["IdUtilisateur"];
+
+            if (idUser != null)
+            {
+                var plats = PlatsManager.GetPlats(id);
+
+                if(plats != null)
+                {
+                    return View(plats);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Restaurants");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
+
+        public IActionResult Commander(int id)
+        {
+            var idUser = HttpContext.Request.Cookies["IdUtilisateur"];
+
+            if (idUser != null)
+            {
+                return RedirectToAction("Index", "Restaurants");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }  
         }
     }
 }

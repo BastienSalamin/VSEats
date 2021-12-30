@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DTO.Restaurants>
+
+@{
+    ViewData["Title"] = "Les Restaurants";
+}
+
+<h2>Les Restaurants</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdRestaurant)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.IdLocalite)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Adresse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOuverture)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRestaurant)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.IdLocalite)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adresse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOuverture)
+            </td>
+            <td>
+                @Html.ActionLink("Liste des plats", "Details", new { id=item.IdRestaurant })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

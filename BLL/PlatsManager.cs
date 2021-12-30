@@ -38,5 +38,10 @@ namespace BLL
         {
             return PlatsDb.GetPlats();
         }
+
+        public List<Plats> GetPlats(int idRestaurant)
+        {
+            return PlatsDb.GetPlats(idRestaurant);
+        }
     }
 }

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<DTO.Plats>
+
+@{
+    ViewData["Title"] = "Les Plats";
+}
+
+<h3>Liste des plats</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPlat)
+            </th>
+            @*@<th>
+                @Html.DisplayNameFor(model => model.IdRestaurant)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.Nom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prix)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdPlat)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.IdRestaurant)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prix) CHF
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Ajouter ce plat 1x à ma commande", "Commander", new { id=item.IdPlat })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
