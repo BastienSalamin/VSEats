@@ -33,7 +33,7 @@ namespace WebApp.Controllers
 
                 if (connexion == true)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Restaurants");
                 }
                 else
                 {
