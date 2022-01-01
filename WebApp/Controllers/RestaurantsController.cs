@@ -107,18 +107,22 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                /*var idCommande = HttpContext.Request.Cookies["IdCommande"];
+                var idCommande = HttpContext.Request.Cookies["IdCommande"];
 
                 if (idCommande != null)
                 {
-                    return RedirectToAction("Index", "Restaurants");
+                    return RedirectToAction("Index", "Commandes");
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Restaurants");
-                }*/
+                    var prixTotal = debutCommande.Prix * debutCommande.Quantite;
+                    CommandesManager.Order(debutCommande.IdUtilisateur, 1, prixTotal, debutCommande.HeureLivraison); // Comment faire pour le livreur ?
+                    var idNewCommande = CommandesManager.GetIdCommande(debutCommande.IdUtilisateur, prixTotal, debutCommande.HeureLivraison);
+                    CommandesPlatsManager.AddQuantite(idNewCommande, debutCommande.IdPlat, debutCommande.Quantite);
+                    HttpContext.Response.Cookies.Append("IdCommande", idNewCommande.ToString());
 
-                return View(debutCommande);
+                    return RedirectToAction("Index", "Commandes");
+                }
             }
 
             return View(debutCommande);

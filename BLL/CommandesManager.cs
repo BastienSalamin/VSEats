@@ -61,5 +61,15 @@ namespace BLL
             return CommandesDb.GetCommandes();
         }
 
+        public List<Commandes> GetCommandes(int idUser)
+        {
+            return CommandesDb.GetCommandes(idUser);
+        }
+
+        public int GetIdCommande(int idUtilisateur, double prixTotal, DateTime date)
+        {
+            return CommandesDb.GetIdCommande(idUtilisateur, prixTotal, date);
+        }
+
     }
 }

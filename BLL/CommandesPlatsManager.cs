@@ -27,11 +27,6 @@ namespace BLL
             return CommandesPlatsDb.AddQuantite(idCommande, idPlat, quantite);
         }
 
-        public int UpdateQuantite(int idCommande, int idPlat)
-        {
-            return CommandesPlatsDb.UpdateQuantite(idCommande, idPlat);
-        }
-
         //les getters
         public List<CommandesPlats> GetCommandesPlats()
         {

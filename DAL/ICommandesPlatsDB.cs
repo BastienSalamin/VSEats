@@ -7,6 +7,5 @@ namespace DAL
     {
         int AddQuantite(int idCommande, int idPlat, int quantite);
         List<CommandesPlats> GetCommandesPlats();
-        int UpdateQuantite(int idCommande, int idPlat);
     }
 }
