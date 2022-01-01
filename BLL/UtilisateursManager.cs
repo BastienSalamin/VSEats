@@ -25,8 +25,6 @@ namespace BLL
 
 
         //liste des méthodes utilisateurs
-
-
         public void Subscribe(int npa, string nom, string prenom, string login, string motDePasse, string adresse, string numTelephone)
         {
 

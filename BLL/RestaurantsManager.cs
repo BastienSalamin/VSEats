@@ -23,10 +23,14 @@ namespace BLL
         //liste des méthodes
 
         //les getters
-
         public List<Restaurants> GetRestaurants()
         {
             return RestaurantsDb.GetRestaurants();
+        }
+
+        public List<Restaurants> GetRestaurants(int idLocalite)
+        {
+            return RestaurantsDb.GetRestaurants(idLocalite);
         }
     }
 }

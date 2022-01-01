@@ -29,6 +29,11 @@ namespace BLL
             return PlatsDb.GetPlatID(nom, idRestaurant);
         }
 
+        public string GetNomPlat(int idPlat)
+        {
+            return PlatsDb.GetNomPlat(idPlat);
+        }
+
         public double GetPrixPlat(int idPlat)
         {
             return PlatsDb.GetPrixPlat(idPlat);
@@ -37,6 +42,11 @@ namespace BLL
         public List<Plats> GetPlats()
         {
             return PlatsDb.GetPlats();
+        }
+
+        public List<Plats> GetPlats(int idRestaurant)
+        {
+            return PlatsDb.GetPlats(idRestaurant);
         }
     }
 }

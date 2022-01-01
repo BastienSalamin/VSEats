@@ -21,7 +21,6 @@ namespace BLL
         }
 
         //liste des méthodes utilisateurs
-
         public void UpdateDisponibilite(int livreur, bool disponible)
         {
             LivreursDb.UpdateDisponibilite(livreur, disponible);

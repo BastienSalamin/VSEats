@@ -18,13 +18,12 @@ namespace BLL
         // Création du constructeur pour instancier la DAL
         public CategoriesPlatsManager(ICategoriesPlatsDB categoriesPlatsDb)
         {
-            CategoriesPlatsDb =categoriesPlatsDb;
+            CategoriesPlatsDb = categoriesPlatsDb;
         }
 
         //liste des méthodes utilisateurs
 
         //les getters
-
         public List<CategoriesPlats> GetCategoriesPlats()
         {
             return CategoriesPlatsDb.GetCategoriesPlats();

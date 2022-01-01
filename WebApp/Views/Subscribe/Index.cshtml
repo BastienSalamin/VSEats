@@ -1,7 +1,7 @@
 ﻿@model WebApp.Models.SubscribeVM
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Inscription";
 }
 
 <h1>Inscription</h1>
@@ -47,14 +47,14 @@
                 <span asp-validation-for="NumTelephone" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Créer mon compte !" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <p>Déjà un compte ? <a asp-controller="Login" asp-action="Index">Connectez-vous !</a></p>
 </div>
 
 @section Scripts {

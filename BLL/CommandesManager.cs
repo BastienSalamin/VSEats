@@ -48,7 +48,6 @@ namespace BLL
         }
 
         //update
-
         public void updateDelivery(int idCommande)
         {
 
@@ -57,10 +56,19 @@ namespace BLL
 
 
         //les getters
-
         public List<Commandes> GetCommandes()
         {
             return CommandesDb.GetCommandes();
+        }
+
+        public List<Commandes> GetCommandes(int idUser)
+        {
+            return CommandesDb.GetCommandes(idUser);
+        }
+
+        public int GetIdCommande(int idUtilisateur, double prixTotal, DateTime date)
+        {
+            return CommandesDb.GetIdCommande(idUtilisateur, prixTotal, date);
         }
 
     }

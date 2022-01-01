@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BLL;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,14 +13,35 @@ namespace WebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IUtilisateursManager UtilisateursManager { get; }
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IUtilisateursManager utilisateursManager)
         {
             _logger = logger;
+            UtilisateursManager = utilisateursManager;
         }
 
         public IActionResult Index()
         {
+            var id = HttpContext.Request.Cookies["IdUtilisateur"];
+
+            if(id != null)
+            {
+                int idUser = Int32.Parse(id);
+
+                var users = UtilisateursManager.GetUtilisateurs();
+
+                foreach (var user in users)
+                {
+                    if (user.IdUtilisateur == idUser)
+                    {
+                        return View(user);
+                    }
+                }
+
+                return View();
+            }
+
             return View();
         }
 

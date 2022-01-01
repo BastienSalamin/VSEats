@@ -134,5 +134,99 @@ namespace DAL
 
             return results;
         }
+
+        public List<Commandes> GetCommandes(int idUser)
+        {
+            List<Commandes> results = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from Commandes WHERE IdUtilisateur = @idUtilisateur";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("IdUtilisateur", idUser);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            if (results == null)
+                                results = new List<Commandes>();
+
+                            Commandes commande = new Commandes();
+
+                            commande.IdCommande = (int)dr["IdCommande"];
+
+                            commande.IdUtilisateur = (int)dr["IdUtilisateur"];
+
+                            commande.IdLivreur = (int)dr["IdLivreur"];
+
+                            commande.CommandeLivree = (Boolean)dr["CommandeLivree"];
+
+                            commande.PrixTotal = (double)dr["PrixTotal"];
+
+                            commande.Date = (DateTime)dr["Date"];
+
+                            if (dr["TempsLivraison"] != DBNull.Value)
+                                commande.TempsLivraison = (int)dr["TempsLivraison"];
+
+                            results.Add(commande);
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return results;
+        }
+
+        public int GetIdCommande(int idUtilisateur, double prixTotal, DateTime date)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "SELECT * FROM Commandes WHERE IdUtilisateur = @idUtilisateur AND PrixTotal = @prixTotal AND Date = @date";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idUtilisateur", idUtilisateur);
+                    cmd.Parameters.AddWithValue("@prixTotal", prixTotal);
+                    cmd.Parameters.AddWithValue("@date", date);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Commandes commande = new Commandes();
+
+                            commande.IdCommande = (int)dr["IdCommande"];
+
+                            result = commande.IdCommande;
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
     }
 }

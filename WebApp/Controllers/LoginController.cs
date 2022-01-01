@@ -33,16 +33,27 @@ namespace WebApp.Controllers
 
                 if (connexion == true)
                 {
-                    return RedirectToAction("Index", "Restaurants");
+                    // Création du cookie utilisateur
+                    var user = UtilisateursManager.GetUtilisateurs(loginWm.Email, loginWm.MotDePasse);
+                    HttpContext.Response.Cookies.Append("IdUtilisateur", user.IdUtilisateur.ToString());
+
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Woops! Email or Password is wrong!");
+                    ModelState.AddModelError("", "Oups ! L'e-mail ou le mot de passe est faux !");
                 }
 
             }
 
             return View(loginWm);
+        }
+
+        public IActionResult Unlog()
+        {
+            HttpContext.Response.Cookies.Delete("IdUtilisateur");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

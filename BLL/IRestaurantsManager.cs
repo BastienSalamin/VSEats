@@ -6,5 +6,6 @@ namespace BLL
     public interface IRestaurantsManager
     {
         List<Restaurants> GetRestaurants();
+        List<Restaurants> GetRestaurants(int idLocalite);
     }
 }
