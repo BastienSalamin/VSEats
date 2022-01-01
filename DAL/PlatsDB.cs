@@ -92,6 +92,44 @@ namespace DAL
             return result;
         }
 
+        public string GetNomPlat(int idPlat)
+        {
+            string result = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    String query = "SELECT Nom FROM PLATS WHERE IdPlat = @idPlat";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@IdPlat", idPlat);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            Plats plat = new Plats();
+
+                            if (dr["Nom"] != DBNull.Value)
+                                plat.Nom = (string)dr["Nom"];
+
+                            result = plat.Nom;
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
         public List<Plats> GetPlats()
         {
             List<Plats> results = null;

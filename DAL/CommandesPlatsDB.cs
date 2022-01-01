@@ -50,6 +50,37 @@ namespace DAL
             return result;
         }
 
+        public int UpdateQuantite(int idCommande, int idPlat)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Update CommandesPlats Set Quantite = Quantite + 1 WHERE IdPlat = @idPlat AND IdCommande = @idCommande";
+
+                    SqlCommand cmd = new SqlCommand(query, cn);
+                    cmd.Parameters.AddWithValue("@idPlat", idPlat);
+                    cmd.Parameters.AddWithValue("@idCommande", idCommande);
+
+                    cn.Open();
+
+                    result = cmd.ExecuteNonQuery();
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
         public List<CommandesPlats> GetCommandesPlats()
         {
             List<CommandesPlats> results = null;

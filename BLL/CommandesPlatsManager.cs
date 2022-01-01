@@ -22,6 +22,15 @@ namespace BLL
         }
 
         //liste des méthodes utilisateurs
+        public int AddQuantite(int idCommande, int idPlat, int quantite)
+        {
+            return CommandesPlatsDb.AddQuantite(idCommande, idPlat, quantite);
+        }
+
+        public int UpdateQuantite(int idCommande, int idPlat)
+        {
+            return CommandesPlatsDb.UpdateQuantite(idCommande, idPlat);
+        }
 
         //les getters
         public List<CommandesPlats> GetCommandesPlats()

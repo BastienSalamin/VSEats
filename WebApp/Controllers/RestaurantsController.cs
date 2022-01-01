@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
@@ -12,12 +13,16 @@ namespace WebApp.Controllers
         private IRestaurantsManager RestaurantsManager { get; }
         private IUtilisateursManager UtilisateursManager { get; }
         private IPlatsManager PlatsManager { get; }
+        private ICommandesManager CommandesManager { get; }
+        private ICommandesPlatsManager CommandesPlatsManager { get; }
 
-        public RestaurantsController(IRestaurantsManager restaurantsManager, IUtilisateursManager utilisateursManager, IPlatsManager platsManager)
+        public RestaurantsController(IRestaurantsManager restaurantsManager, IUtilisateursManager utilisateursManager, IPlatsManager platsManager, ICommandesManager commandesManager, ICommandesPlatsManager commandesPlatsManager)
         {
             RestaurantsManager = restaurantsManager;
             UtilisateursManager = utilisateursManager;
             PlatsManager = platsManager;
+            CommandesManager = commandesManager;
+            CommandesPlatsManager = commandesPlatsManager;
         }
 
         public IActionResult Index()
@@ -78,12 +83,45 @@ namespace WebApp.Controllers
 
             if (idUser != null)
             {
-                return RedirectToAction("Index", "Restaurants");
+                var idUtilisateur = Int32.Parse(idUser);
+                var prixPlat = PlatsManager.GetPrixPlat(id);
+                CommandeVM debutCommande = new CommandeVM();
+                debutCommande.IdUtilisateur = idUtilisateur;
+                debutCommande.IdPlat = id;
+                debutCommande.Nom = PlatsManager.GetNomPlat(id);
+                debutCommande.Prix = prixPlat;
+                debutCommande.Quantite = 1;
+                debutCommande.HeureLivraison = DateTime.Now;
+
+                return View(debutCommande);
             }
             else
             {
                 return RedirectToAction("Index", "Login");
-            }  
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Commander(CommandeVM debutCommande)
+        {
+            if (ModelState.IsValid)
+            {
+                /*var idCommande = HttpContext.Request.Cookies["IdCommande"];
+
+                if (idCommande != null)
+                {
+                    return RedirectToAction("Index", "Restaurants");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Restaurants");
+                }*/
+
+                return View(debutCommande);
+            }
+
+            return View(debutCommande);
         }
     }
 }

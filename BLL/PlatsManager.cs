@@ -29,6 +29,11 @@ namespace BLL
             return PlatsDb.GetPlatID(nom, idRestaurant);
         }
 
+        public string GetNomPlat(int idPlat)
+        {
+            return PlatsDb.GetNomPlat(idPlat);
+        }
+
         public double GetPrixPlat(int idPlat)
         {
             return PlatsDb.GetPrixPlat(idPlat);
