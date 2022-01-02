@@ -15,8 +15,9 @@ namespace WebApp.Models
         [Required]
         public int Quantite { get; set; }
         [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy hh:mm:ss tt}")]
-        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm}")]
+        [DataType(DataType.Time)]
+        [Display(Name = "Heure de livraison")]
         public DateTime HeureLivraison { get; set; }
     }
 }
