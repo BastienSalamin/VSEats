@@ -12,10 +12,12 @@ namespace WebApp.Controllers
     {
 
         private IUtilisateursManager UtilisateursManager { get; }
+        private ILivreursManager LivreursManager { get; }
 
-        public LoginController(IUtilisateursManager utilisateursManager)
+        public LoginController(IUtilisateursManager utilisateursManager, ILivreursManager livreursManager)
         {
             UtilisateursManager = utilisateursManager;
+            LivreursManager = livreursManager;
         }
 
         public IActionResult Index()
@@ -58,7 +60,16 @@ namespace WebApp.Controllers
 
         public IActionResult LivreurIndex()
         {
-            return View();
+            var id = HttpContext.Request.Cookies["IdLivreur"];
+
+            if(id != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
@@ -67,9 +78,19 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                var livreur = LivreursManager.GetLivreurs(loginVM.Email, loginVM.MotDePasse);
 
+                if(livreur != null)
+                {
+                    HttpContext.Response.Cookies.Append("IdLivreur", livreur.IdLivreur.ToString());
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Oups ! L'e-mail ou le mot de passe est faux !");
+                }
             }
-            return View();
+            return View(loginVM);
         }
     }
 }
