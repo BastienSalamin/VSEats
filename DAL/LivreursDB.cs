@@ -93,5 +93,53 @@ namespace DAL
 
             return results;
         }
+
+        public Livreurs GetLivreurs(string login, string motDePasse)
+        {
+            Livreurs livreur = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from Livreurs WHERE Login = @login AND MotDePasse = @motDePasse";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@login", login);
+                    cmd.Parameters.AddWithValue("@motDePasse", motDePasse);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+
+                            livreur = new Livreurs();
+
+                            livreur.IdLivreur = (int)dr["IdLivreur"];
+
+                            livreur.IdLocalite = (int)dr["IdLocalite"];
+
+                            livreur.Nom = (string)dr["Nom"];
+
+                            livreur.Prenom = (string)dr["Prenom"];
+
+                            livreur.NumTelephone = (string)dr["NumTelephone"];
+
+                            livreur.Disponible = (Boolean)dr["Disponible"];
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return livreur;
+        }
     }
 }

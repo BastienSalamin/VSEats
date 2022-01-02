@@ -55,5 +55,21 @@ namespace WebApp.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult LivreurIndex()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult LivreurIndex(LoginVM loginVM)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View();
+        }
     }
 }

@@ -31,5 +31,10 @@ namespace BLL
         {
             return LivreursDb.GetLivreurs();
         }
+
+        public Livreurs GetLivreurs(string login, string motDePasse)
+        {
+            return LivreursDb.GetLivreurs(login, motDePasse);
+        }
     }
 }
