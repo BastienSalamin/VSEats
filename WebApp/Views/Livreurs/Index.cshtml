@@ -1,0 +1,82 @@
+﻿@model IEnumerable<DTO.Commandes>
+
+@{
+    ViewData["Title"] = "Commandes";
+
+    var idCookie = Context.Request.Cookies["IdLivreur"];
+
+    var nomCookie = Context.Request.Cookies["NomLivreur"];
+
+    var prenomCookie = Context.Request.Cookies["PrenomLivreur"];
+
+    var npaCookie = Context.Request.Cookies["LocaliteNPA"];
+
+    var villeCookie = Context.Request.Cookies["LocaliteVille"];
+}
+
+<h1>Commandes sur @npaCookie @villeCookie</h1>
+<h4>Bonjour @prenomCookie @nomCookie ! Vous êtes identifié sous l'IdLivreur N°@idCookie</h4>
+
+<p>
+    <a asp-action="UnlogLivreur" asp-controller="Login">Se déconnecter</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCommande)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdUtilisateur)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdLivreur)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CommandeLivree)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrixTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date) de livraison
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TempsLivraison)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCommande)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdUtilisateur)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdLivreur)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CommandeLivree)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrixTotal) CHF
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TempsLivraison) minutes
+            </td>
+            <td>
+                @Html.ActionLink("Prendre", "Take", new { idCommande=item.IdCommande }) |
+                @Html.ActionLink("Détails", "Details", new { idCommande=item.IdCommande }) |
+                @Html.ActionLink("A livré", "Deliver", new { idCommande=item.IdCommande })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

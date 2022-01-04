@@ -13,16 +13,27 @@ namespace WebApp.Controllers
 
         private IUtilisateursManager UtilisateursManager { get; }
         private ILivreursManager LivreursManager { get; }
+        public ILocalitesManager LocalitesManager { get; set; }
 
-        public LoginController(IUtilisateursManager utilisateursManager, ILivreursManager livreursManager)
+        public LoginController(IUtilisateursManager utilisateursManager, ILivreursManager livreursManager, ILocalitesManager localitesManager)
         {
             UtilisateursManager = utilisateursManager;
             LivreursManager = livreursManager;
+            LocalitesManager = localitesManager;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var id = HttpContext.Request.Cookies["IdLivreur"];
+
+            if (id != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpPost]
@@ -64,7 +75,7 @@ namespace WebApp.Controllers
 
             if(id != null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Livreurs");
             }
             else
             {
@@ -83,7 +94,26 @@ namespace WebApp.Controllers
                 if(livreur != null)
                 {
                     HttpContext.Response.Cookies.Append("IdLivreur", livreur.IdLivreur.ToString());
-                    return RedirectToAction("Index", "Home");
+                    HttpContext.Response.Cookies.Append("NomLivreur", livreur.Nom);
+                    HttpContext.Response.Cookies.Append("PrenomLivreur", livreur.Prenom);
+
+                    var localites = LocalitesManager.GetLocalites();
+                    int npa = 0;
+                    string ville = "";
+
+                    foreach (var localite in localites)
+                    {
+                        if (localite.IdLocalite == livreur.IdLocalite)
+                        {
+                            npa = localite.NPA;
+                            ville = localite.Ville;
+                        }
+                    }
+
+                    HttpContext.Response.Cookies.Append("LocaliteNPA", npa.ToString());
+                    HttpContext.Response.Cookies.Append("LocaliteVille", ville);
+
+                    return RedirectToAction("Index", "Livreurs");
                 }
                 else
                 {
@@ -91,6 +121,17 @@ namespace WebApp.Controllers
                 }
             }
             return View(loginVM);
+        }
+
+        public IActionResult UnlogLivreur()
+        {
+            HttpContext.Response.Cookies.Delete("IdLivreur");
+            HttpContext.Response.Cookies.Delete("NomLivreur");
+            HttpContext.Response.Cookies.Delete("PrenomLivreur");
+            HttpContext.Response.Cookies.Delete("LocaliteNPA");
+            HttpContext.Response.Cookies.Delete("LocaliteVille");
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

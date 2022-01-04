@@ -45,6 +45,58 @@ namespace DAL
             return result;
         }
 
+        public int AddCommande(int idLivreur)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Update Livreurs set NbCommande = NbCommande + 1 WHERE IdLivreur = @idLivreur";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idLivreur", idLivreur);
+
+                    cn.Open();
+
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return result;
+        }
+
+        public int RemoveCommande(int idLivreur)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Update Livreurs set NbCommande = NbCommande - 1 WHERE IdLivreur = @idLivreur";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idLivreur", idLivreur);
+
+                    cn.Open();
+
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return result;
+        }
+
         public List<Livreurs> GetLivreurs()
         {
             List<Livreurs> results = null;
@@ -77,6 +129,8 @@ namespace DAL
                             livreur.Prenom = (string)dr["Prenom"];
 
                             livreur.NumTelephone = (string)dr["NumTelephone"];
+
+                            livreur.NbCommande = (int)dr["NbCommande"];
 
                             livreur.Disponible = (Boolean)dr["Disponible"];
 
@@ -128,6 +182,8 @@ namespace DAL
 
                             livreur.NumTelephone = (string)dr["NumTelephone"];
 
+                            livreur.NbCommande = (int)dr["NbCommande"];
+
                             livreur.Disponible = (Boolean)dr["Disponible"];
 
                         }
@@ -141,5 +197,55 @@ namespace DAL
 
             return livreur;
         }
+
+        public Livreurs GetLivreurs(int idLivreur)
+        {
+            Livreurs livreur = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from Livreurs WHERE IdLivreur = @idLivreur";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idLivreur", idLivreur);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+
+                            livreur = new Livreurs();
+
+                            livreur.IdLivreur = (int)dr["IdLivreur"];
+
+                            livreur.IdLocalite = (int)dr["IdLocalite"];
+
+                            livreur.Nom = (string)dr["Nom"];
+
+                            livreur.Prenom = (string)dr["Prenom"];
+
+                            livreur.NumTelephone = (string)dr["NumTelephone"];
+
+                            livreur.NbCommande = (int)dr["NbCommande"];
+
+                            livreur.Disponible = (Boolean)dr["Disponible"];
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return livreur;
+        }
+
     }
 }

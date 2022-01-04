@@ -18,6 +18,34 @@ namespace DAL
             Configuration = configuration;
         }
 
+        public int UpdateCommandeLivreur(int idLivreur, int idCommande)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Update Commandes set IdLivreur = @idLivreur WHERE IdCommande = @idCommande";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idLivreur", idLivreur);
+                    cmd.Parameters.AddWithValue("@idCommande", idCommande);
+
+                    cn.Open();
+
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
         public int UpdateCommandeLivree(int idCommande)
         {
             int result = 0;
@@ -147,7 +175,7 @@ namespace DAL
                     string query = "Select * from Commandes WHERE IdUtilisateur = @idUtilisateur";
                     SqlCommand cmd = new SqlCommand(query, cn);
 
-                    cmd.Parameters.AddWithValue("IdUtilisateur", idUser);
+                    cmd.Parameters.AddWithValue("@idUtilisateur", idUser);
 
                     cn.Open();
 
@@ -187,6 +215,55 @@ namespace DAL
             }
 
             return results;
+        }
+
+        public Commandes GetCommande(int idCommande)
+        {
+            Commandes commande = null;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "Select * from Commandes WHERE IdCommande = @idCommande";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idCommande", idCommande);
+
+                    cn.Open();
+
+                    using (SqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            commande = new Commandes();
+
+                            commande.IdCommande = (int)dr["IdCommande"];
+
+                            commande.IdUtilisateur = (int)dr["IdUtilisateur"];
+
+                            commande.IdLivreur = (int)dr["IdLivreur"];
+
+                            commande.CommandeLivree = (Boolean)dr["CommandeLivree"];
+
+                            commande.PrixTotal = (double)dr["PrixTotal"];
+
+                            commande.Date = (DateTime)dr["Date"];
+
+                            if (dr["TempsLivraison"] != DBNull.Value)
+                                commande.TempsLivraison = (int)dr["TempsLivraison"];
+
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return commande;
         }
 
         public int GetIdCommande(int idUtilisateur, double prixTotal, DateTime date)

@@ -26,6 +26,54 @@ namespace BLL
             LivreursDb.UpdateDisponibilite(livreur, disponible);
         }
 
+        public int AddCommande(int idLivreur)
+        {
+            var livreurs = LivreursDb.GetLivreurs();
+
+            int nbCommandesLivreur = 5;
+
+            foreach (var livreur in livreurs)
+            {
+                if (livreur.IdLivreur == idLivreur)
+                {
+                    nbCommandesLivreur = livreur.NbCommande;
+                }
+            }
+
+            if (nbCommandesLivreur == 5)
+            {
+                return -1;
+            }
+            else
+            {
+                return LivreursDb.AddCommande(idLivreur);
+            }
+        }
+
+        public int RemoveCommande(int idLivreur)
+        {
+            var livreurs = LivreursDb.GetLivreurs();
+
+            int nbCommandesLivreur = 0;
+
+            foreach (var livreur in livreurs)
+            {
+                if (livreur.IdLivreur == idLivreur)
+                {
+                    nbCommandesLivreur = livreur.NbCommande;
+                }
+            }
+
+            if (nbCommandesLivreur == 0)
+            {
+                return -1;
+            }
+            else
+            {
+                return LivreursDb.RemoveCommande(idLivreur);
+            }
+        }
+
         //les getters
         public List<Livreurs> GetLivreurs()
         {
@@ -35,6 +83,11 @@ namespace BLL
         public Livreurs GetLivreurs(string login, string motDePasse)
         {
             return LivreursDb.GetLivreurs(login, motDePasse);
+        }
+
+        public Livreurs GetLivreurs(int idLivreur)
+        {
+            return LivreursDb.GetLivreurs(idLivreur);
         }
     }
 }

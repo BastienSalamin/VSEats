@@ -6,10 +6,13 @@ namespace BLL
 {
     public interface ICommandesManager
     {
+        Commandes GetCommande(int idCommande);
         List<Commandes> GetCommandes();
         List<Commandes> GetCommandes(int idUser);
+        List<Commandes> GetCommandesLocales(int idLivreur);
         int GetIdCommande(int idUtilisateur, double prixTotal, DateTime date);
         void Order(int idUtilisateur, int idLivreur, double prixTotal, DateTime date);
-        void updateDelivery(int idCommande);
+        int UpdateCommandeLivreur(int idLivreur, int idCommande);
+        void UpdateDelivery(int idCommande);
     }
 }

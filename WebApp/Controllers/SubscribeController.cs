@@ -21,9 +21,19 @@ namespace WebApp.Controllers
         public IActionResult Index()
         {
             var id = HttpContext.Request.Cookies["IdUtilisateur"];
+
             if(id == null)
             {
-                return View();
+                var idLivreur = HttpContext.Request.Cookies["IdLivreur"];
+
+                if (idLivreur != null)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return View();
+                }
             }
             else
             {

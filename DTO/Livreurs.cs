@@ -13,6 +13,7 @@ namespace DTO
         public string Nom { get; set; }
         public string Prenom { get; set; }
         public string NumTelephone{get;set;}
+        public int NbCommande { get; set; }
         public Boolean Disponible { get; set; }
 
         public override string ToString()
@@ -22,6 +23,7 @@ namespace DTO
                 " Nom: " + Nom +
                 " Prenom: " + Prenom +
                 " NumTelephone: " + NumTelephone +
+                " Nombre de commandes : " + NbCommande +
                 " Disponible: " + Disponible;
                 
         }

@@ -48,17 +48,25 @@ namespace BLL
         }
 
         //update
-        public void updateDelivery(int idCommande)
+        public void UpdateDelivery(int idCommande)
         {
-
             CommandesDb.UpdateCommandeLivree(idCommande);
         }
 
+        public int UpdateCommandeLivreur(int idLivreur, int idCommande)
+        {
+            return CommandesDb.UpdateCommandeLivreur(idLivreur, idCommande);
+        }
 
         //les getters
         public List<Commandes> GetCommandes()
         {
             return CommandesDb.GetCommandes();
+        }
+
+        public Commandes GetCommande(int idCommande)
+        {
+            return CommandesDb.GetCommande(idCommande);
         }
 
         public List<Commandes> GetCommandes(int idUser)
@@ -69,6 +77,30 @@ namespace BLL
         public int GetIdCommande(int idUtilisateur, double prixTotal, DateTime date)
         {
             return CommandesDb.GetIdCommande(idUtilisateur, prixTotal, date);
+        }
+
+        public List<Commandes> GetCommandesLocales(int idLivreur)
+        {
+            var livreur = LivreursDb.GetLivreurs(idLivreur);
+
+            List<Commandes> commandes = new List<Commandes>();
+
+            var users = UtilisateursDb.GetUtilisateurs();
+
+            foreach (var user in users)
+            {
+                if (user.IdLocalite == livreur.IdLocalite)
+                {
+                    var commandesUser = CommandesDb.GetCommandes(user.IdUtilisateur);
+
+                    if (commandesUser != null)
+                    {
+                        commandes.AddRange(commandesUser);
+                    }
+                }
+            }
+
+            return commandes;
         }
 
     }
