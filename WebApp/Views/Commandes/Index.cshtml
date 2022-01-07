@@ -1,37 +1,31 @@
-﻿@model IEnumerable<DTO.Commandes>
+﻿@model IEnumerable<WebApp.Models.PanierVM>
 
 @{
-    ViewData["Title"] = "Mes commandes";
+    ViewData["Title"] = "Panier";
 }
 
-<h1>Historique de mes commandes</h1>
+<h1>Mon Panier</h1>
 
 <p>
-    <a asp-action="Index" asp-controller="Restaurants">Effectuer une nouvelle commande</a>
+    <a asp-action="Historique">Historique de mes commandes</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdCommande)
-            </th>
-            @*<th>
-                @Html.DisplayNameFor(model => model.IdUtilisateur)
+                @Html.DisplayNameFor(model => model.IdPlat)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.IdLivreur)
-            </th>*@
-            <th>
-                @Html.DisplayNameFor(model => model.CommandeLivree)
+                @Html.DisplayNameFor(model => model.Nom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PrixTotal)
+                @Html.DisplayNameFor(model => model.Prix)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date) de livraison
+                @Html.DisplayNameFor(model => model.Quantite)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TempsLivraison)
+                @Html.DisplayNameFor(model => model.HeureLivraison)
             </th>
             <th></th>
         </tr>
@@ -40,30 +34,27 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.IdCommande)
-            </td>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.IdUtilisateur)
+                @Html.DisplayFor(modelItem => item.IdPlat)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdLivreur)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.CommandeLivree)
+                @Html.DisplayFor(modelItem => item.Nom)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PrixTotal) CHF
+                @Html.DisplayFor(modelItem => item.Prix) CHF
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
+                @Html.DisplayFor(modelItem => item.Quantite)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TempsLivraison) minutes
+                @Html.DisplayFor(modelItem => item.HeureLivraison)
             </td>
             <td>
-                @Html.ActionLink("Details", "Index", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Details", "Details", new { id=item.IdPlat })
             </td>
         </tr>
 }
     </tbody>
 </table>
+<p>
+    <a asp-action="Historique">Commander !</a>
+</p>

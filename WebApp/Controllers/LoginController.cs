@@ -72,7 +72,6 @@ namespace WebApp.Controllers
 
             foreach(var plat in plats)
             {
-
                 var id = plat.IdPlat.ToString();
                 var idc = HttpContext.Request.Cookies["IdPlat" + id];
 
