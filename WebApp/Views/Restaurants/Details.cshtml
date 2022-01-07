@@ -1,10 +1,10 @@
-﻿@model IEnumerable<DTO.Plats>
+﻿@model IEnumerable<WebApp.Models.PlatsVM>
 
 @{
     ViewData["Title"] = "Les Plats";
 }
 
-<h3>Liste des plats</h3>
+<h1>Liste de plats</h1>
 
 <table class="table">
     <thead>
@@ -12,7 +12,10 @@
             @*<th>
                 @Html.DisplayNameFor(model => model.IdPlat)
             </th>
-            @<th>
+
+
+            <th>
+
                 @Html.DisplayNameFor(model => model.IdRestaurant)
             </th>*@
             <th>
@@ -24,10 +27,14 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantite)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
+
 @foreach (var item in Model) {
         <tr>
             @*<td>
@@ -50,5 +57,38 @@
             </td>
         </tr>
 }
+
+        @foreach (var item in Model)
+        {
+            <form asp-action="Details">
+            <tr>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.IdPlat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdRestaurant)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prix)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td class="form-group">
+                    <input asp-for="@item.Quantite" class="form-control" />
+                    <span asp-validation-for="@item.Quantite" class="text-danger"></span>
+                </td>
+            </tr>
+
+            <div class="form-group">
+                <input type="submit" value="Details" class="btn btn-primary" />
+            </div>
+
+            </form>
+        }
+
     </tbody>
 </table>
