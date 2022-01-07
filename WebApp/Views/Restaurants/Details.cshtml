@@ -9,10 +9,10 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.IdPlat)
             </th>
-            @*@<th>
+            @<th>
                 @Html.DisplayNameFor(model => model.IdRestaurant)
             </th>*@
             <th>
@@ -30,10 +30,10 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.IdPlat)
             </td>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.IdRestaurant)
             </td>*@
             <td>
@@ -46,7 +46,7 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                @Html.ActionLink("Commander ce plat", "Commander", new { id=item.IdPlat })
+                @Html.ActionLink("Ajouter au panier", "Commander", new { id=item.IdPlat })
             </td>
         </tr>
 }
