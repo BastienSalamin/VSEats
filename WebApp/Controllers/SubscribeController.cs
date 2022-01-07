@@ -59,13 +59,25 @@ namespace WebApp.Controllers
                     }
                 }
 
-                UtilisateursManager.Subscribe(subscribeVM.Npa, subscribeVM.Nom, subscribeVM.Prenom, subscribeVM.Login, subscribeVM.MotDePasse, subscribeVM.Adresse, subscribeVM.NumTelephone);
-                
-                // Création du cookie utilisateur
-                var userCookie = UtilisateursManager.GetUtilisateurs(subscribeVM.Login, subscribeVM.MotDePasse);
-                HttpContext.Response.Cookies.Append("IdUtilisateur", userCookie.IdUtilisateur.ToString());
+                // vérifier que la localité existe
+                var localites = LocalitesManager.GetLocalites();
 
-                return RedirectToAction("Index", "Home");
+                foreach (var localite in localites)
+                {
+                    if (subscribeVM.Npa == localite.NPA)
+                    {
+                        UtilisateursManager.Subscribe(subscribeVM.Npa, subscribeVM.Nom, subscribeVM.Prenom, subscribeVM.Login, subscribeVM.MotDePasse, subscribeVM.Adresse, subscribeVM.NumTelephone);
+
+                        // Création du cookie utilisateur
+                        var userCookie = UtilisateursManager.GetUtilisateurs(subscribeVM.Login, subscribeVM.MotDePasse);
+                        HttpContext.Response.Cookies.Append("IdUtilisateur", userCookie.IdUtilisateur.ToString());
+
+                        return RedirectToAction("Index", "Home");
+                    }
+                }
+
+                ModelState.AddModelError("", "Cette localité n'existe pas !");
+                return View(subscribeVM);
 
             }
             else
