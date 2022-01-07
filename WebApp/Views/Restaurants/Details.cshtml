@@ -12,7 +12,10 @@
             @*<th>
                 @Html.DisplayNameFor(model => model.IdPlat)
             </th>
+
+
             <th>
+
                 @Html.DisplayNameFor(model => model.IdRestaurant)
             </th>*@
             <th>
@@ -31,6 +34,30 @@
         </tr>
     </thead>
     <tbody>
+
+@foreach (var item in Model) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.IdPlat)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdRestaurant)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prix) CHF
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Ajouter au panier", "Commander", new { id=item.IdPlat })
+            </td>
+        </tr>
+}
+
         @foreach (var item in Model)
         {
             <form asp-action="Details">
@@ -62,5 +89,6 @@
 
             </form>
         }
+
     </tbody>
 </table>

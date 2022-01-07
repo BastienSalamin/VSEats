@@ -62,9 +62,15 @@ namespace WebApp.Controllers
                 // vérifier que la localité existe
                 var localites = LocalitesManager.GetLocalites();
 
+
+                foreach (var localite in localites)
+                {
+                    if (subscribeVM.Npa == localite.NPA)
+
                 foreach(var localite in localites)
                 {
                     if(subscribeVM.Npa == localite.NPA)
+
                     {
                         UtilisateursManager.Subscribe(subscribeVM.Npa, subscribeVM.Nom, subscribeVM.Prenom, subscribeVM.Login, subscribeVM.MotDePasse, subscribeVM.Adresse, subscribeVM.NumTelephone);
 
