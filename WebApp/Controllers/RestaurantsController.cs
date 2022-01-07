@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Models;
+using DTO;
 
 namespace WebApp.Controllers
 {
@@ -64,21 +65,7 @@ namespace WebApp.Controllers
 
                 if (plats != null)
                 {
-                    List<PlatsVM> platsQuantite = new List<PlatsVM>();
-
-                    foreach (var plat in plats)
-                    {
-                        PlatsVM platQuantite = new PlatsVM();
-                        platQuantite.IdPlat = plat.IdPlat;
-                        platQuantite.IdRestaurant = plat.IdRestaurant;
-                        platQuantite.Nom = plat.Nom;
-                        platQuantite.Prix = plat.Prix;
-                        platQuantite.Description = plat.Description;
-                        platQuantite.Quantite = 0;
-                        platsQuantite.Add(platQuantite);
-                    }
-
-                    return View(platsQuantite);
+                    return View(plats);
                 }
                 else
                 {
@@ -140,27 +127,6 @@ namespace WebApp.Controllers
             }
 
             return View(debutCommande);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Details(List<PlatsVM> platsVMs)
-        {
-            if (ModelState.IsValid)
-            { 
-                foreach (var plat in platsVMs)
-                {
-                    if (plat.Quantite > 0)
-                    {
-                        HttpContext.Response.Cookies.Append("IdPlat", plat.IdPlat.ToString());
-                        HttpContext.Response.Cookies.Append("Quantite", plat.Quantite.ToString());
-                        
-                    }
-                    
-                }
-                return RedirectToAction("Commander", "Restaurants");
-            }
-            return View(platsVMs);
         }
     }
 }
