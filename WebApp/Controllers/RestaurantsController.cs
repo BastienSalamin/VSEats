@@ -64,7 +64,21 @@ namespace WebApp.Controllers
 
                 if(plats != null)
                 {
-                    return View(plats);
+                    List<PlatsVM> platsQuantite = new List<PlatsVM>();
+
+                    foreach(var plat in plats)
+                    {
+                        PlatsVM platQuantite = new PlatsVM();
+                        platQuantite.IdPlat = plat.IdPlat;
+                        platQuantite.IdRestaurant = plat.IdRestaurant;
+                        platQuantite.Nom = plat.Nom;
+                        platQuantite.Prix = plat.Prix;
+                        platQuantite.Description = plat.Description;
+                        platQuantite.Quantite = 0;
+                        platsQuantite.Add(platQuantite);
+                    }
+
+                    return View(platsQuantite);
                 }
                 else
                 {
