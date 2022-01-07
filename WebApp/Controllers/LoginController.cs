@@ -13,10 +13,12 @@ namespace WebApp.Controllers
 
         private IUtilisateursManager UtilisateursManager { get; }
         private ILivreursManager LivreursManager { get; }
-        public ILocalitesManager LocalitesManager { get; set; }
+        private ILocalitesManager LocalitesManager { get; set; }
+        private IPlatsManager PlatsManager { get; set; }
 
-        public LoginController(IUtilisateursManager utilisateursManager, ILivreursManager livreursManager, ILocalitesManager localitesManager)
+        public LoginController(IUtilisateursManager utilisateursManager, ILivreursManager livreursManager, ILocalitesManager localitesManager, IPlatsManager platsManager)
         {
+            PlatsManager = platsManager;
             UtilisateursManager = utilisateursManager;
             LivreursManager = livreursManager;
             LocalitesManager = localitesManager;
@@ -65,6 +67,20 @@ namespace WebApp.Controllers
         public IActionResult Unlog()
         {
             HttpContext.Response.Cookies.Delete("IdUtilisateur");
+
+            var plats = PlatsManager.GetPlats();
+
+            foreach(var plat in plats)
+            {
+
+                var id = plat.IdPlat.ToString();
+                var idc = HttpContext.Request.Cookies["IdPlat" + id];
+
+                if(idc != null)
+                {
+                    HttpContext.Response.Cookies.Delete("IdPlat" + id);
+                }
+            }
 
             return RedirectToAction("Index", "Home");
         }

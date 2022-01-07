@@ -78,23 +78,34 @@ namespace WebApp.Controllers
             }
         }
 
+        public IActionResult Terminer()
+        {
+            return RedirectToAction("Index", "Commandes");
+        }
+
         public IActionResult Commander(int id)
         {
             var idUser = HttpContext.Request.Cookies["IdUtilisateur"];
 
             if (idUser != null)
             {
-                var idUtilisateur = Int32.Parse(idUser);
-                var prixPlat = PlatsManager.GetPrixPlat(id);
-                CommandeVM debutCommande = new CommandeVM();
-                debutCommande.IdUtilisateur = idUtilisateur;
-                debutCommande.IdPlat = id;
-                debutCommande.Nom = PlatsManager.GetNomPlat(id);
-                debutCommande.Prix = prixPlat;
-                debutCommande.Quantite = 1;
-                debutCommande.HeureLivraison = DateTime.Now;
+                var plats = PlatsManager.GetPlats();
+                int idRestaurant = 0 ;
 
-                return View(debutCommande);
+                foreach(var plat in plats)
+                {
+                    if (plat.IdPlat == id)
+                    {
+                        idRestaurant = plat.IdRestaurant;
+                    }
+                }
+
+                /*Ajout du plat dans le panier*/
+
+                HttpContext.Response.Cookies.Append("IdPlat" + id.ToString(), id.ToString() );
+
+
+                return RedirectToAction("Details", new { id = idRestaurant });
             }
             else
             {
