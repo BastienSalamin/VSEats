@@ -31,32 +31,36 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.IdPlat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdRestaurant)
-            </td>*@
-            <td>
-                @Html.DisplayFor(modelItem => item.Nom)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prix)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td class="form-group">
-                <input asp-for="@item.Quantite" class="form-control" />
-                <span asp-validation-for="@item.Quantite" class="text-danger"></span>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <form asp-action="Details">
+            <tr>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.IdPlat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdRestaurant)
+                </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prix)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td class="form-group">
+                    <input asp-for="@item.Quantite" class="form-control" />
+                    <span asp-validation-for="@item.Quantite" class="text-danger"></span>
+                </td>
+            </tr>
+
+            <div class="form-group">
+                <input type="submit" value="Details" class="btn btn-primary" />
+            </div>
+
+            </form>
+        }
     </tbody>
 </table>
-
-<p>
-    @Html.ActionLink("Commander", "Commander", new { /* id=item.PrimaryKey */ })
-</p>

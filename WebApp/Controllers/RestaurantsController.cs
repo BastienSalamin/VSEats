@@ -29,7 +29,7 @@ namespace WebApp.Controllers
         {
             var id = HttpContext.Request.Cookies["IdUtilisateur"];
 
-            if(id != null)
+            if (id != null)
             {
                 int idUser = Int32.Parse(id);
 
@@ -39,7 +39,7 @@ namespace WebApp.Controllers
 
                 var restaurants = RestaurantsManager.GetRestaurants(idLocalite);
 
-                if(restaurants != null)
+                if (restaurants != null)
                 {
                     return View(restaurants);
                 }
@@ -62,11 +62,11 @@ namespace WebApp.Controllers
             {
                 var plats = PlatsManager.GetPlats(id);
 
-                if(plats != null)
+                if (plats != null)
                 {
                     List<PlatsVM> platsQuantite = new List<PlatsVM>();
 
-                    foreach(var plat in plats)
+                    foreach (var plat in plats)
                     {
                         PlatsVM platQuantite = new PlatsVM();
                         platQuantite.IdPlat = plat.IdPlat;
@@ -140,6 +140,27 @@ namespace WebApp.Controllers
             }
 
             return View(debutCommande);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Details(List<PlatsVM> platsVMs)
+        {
+            if (ModelState.IsValid)
+            { 
+                foreach (var plat in platsVMs)
+                {
+                    if (plat.Quantite > 0)
+                    {
+                        HttpContext.Response.Cookies.Append("IdPlat", plat.IdPlat.ToString());
+                        HttpContext.Response.Cookies.Append("Quantite", plat.Quantite.ToString());
+                        
+                    }
+                    
+                }
+                return RedirectToAction("Commander", "Restaurants");
+            }
+            return View(platsVMs);
         }
     }
 }
