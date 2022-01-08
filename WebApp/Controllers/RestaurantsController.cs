@@ -65,7 +65,20 @@ namespace WebApp.Controllers
 
                 if (plats != null)
                 {
-                    return View(plats);
+                    List<ItemVM> items = new List<ItemVM>();
+
+                    foreach (var plat in plats)
+                    {
+                        ItemVM element = new ItemVM();
+                        element.IdRestaurant = plat.IdRestaurant;
+                        element.Description = plat.Description;
+                        element.IdPlat = plat.IdPlat;
+                        element.Nom = plat.Nom;
+                        element.Prix = plat.Prix;
+                        items.Add(element);
+                    }
+
+                    return View(items);
                 }
                 else
                 {
@@ -78,23 +91,17 @@ namespace WebApp.Controllers
             }
         }
 
-        public IActionResult Terminer()
+        [HttpPost]
+        public IActionResult Details(ItemVM itemvm)
         {
-            return RedirectToAction("Index", "Commandes");
-        }
-
-        public IActionResult Commander(int id)
-        {
-            var idUser = HttpContext.Request.Cookies["IdUtilisateur"];
-
-            if (idUser != null)
+            if (ModelState.IsValid)
             {
                 var plats = PlatsManager.GetPlats();
-                int idRestaurant = 0 ;
+                int idRestaurant = 0;
 
-                foreach(var plat in plats)
+                foreach (var plat in plats)
                 {
-                    if (plat.IdPlat == id)
+                    if (plat.IdPlat == itemvm.IdPlat)
                     {
                         idRestaurant = plat.IdRestaurant;
                     }
@@ -102,15 +109,18 @@ namespace WebApp.Controllers
 
                 /*Ajout du plat dans le panier*/
 
-                HttpContext.Response.Cookies.Append("IdPlat" + id.ToString(), id.ToString() );
+                HttpContext.Response.Cookies.Append("IdPlat" + itemvm.IdPlat.ToString(), itemvm.Quantite.ToString());
 
 
                 return RedirectToAction("Details", new { id = idRestaurant });
             }
-            else
-            {
-                return RedirectToAction("Index", "Login");
-            }
+
+            return View(itemvm);
+        }
+
+        public IActionResult Terminer()
+        {
+            return RedirectToAction("Index", "Commandes");
         }
 
         [HttpPost]

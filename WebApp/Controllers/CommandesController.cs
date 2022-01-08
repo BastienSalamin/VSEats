@@ -21,7 +21,7 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
-            List<PanierVM> panier = new List<PanierVM>();
+            List<ItemVM> items= new List<ItemVM>();
 
             var plats = PlatsManager.GetPlats();
 
@@ -32,16 +32,22 @@ namespace WebApp.Controllers
 
                 if (idc != null)
                 {
-                    PanierVM element = new PanierVM();
+                    ItemVM element = new ItemVM();
+                    element.IdRestaurant = plat.IdRestaurant;
+                    element.Description = plat.Description;
                     element.IdPlat = plat.IdPlat;
                     element.Nom = plat.Nom;
                     element.Prix = plat.Prix;
-                    element.Quantite = 1;
-                    element.HeureLivraison = DateTime.Now;
-                    panier.Add(element);
-
+                    element.Quantite = Int32.Parse(idc);
+                    items.Add(element);
                 }
             }
+
+            PanierVM panier = new PanierVM()
+            {
+                Items = items,
+                HeureLivraison = DateTime.Now
+            };
 
             return View(panier);
         }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DTO.Plats>
+﻿@model IEnumerable<ItemVM>
 
 @{
     ViewData["Title"] = "Les Plats";
@@ -24,36 +24,59 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantite)
+            </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        <form asp-action="Details">
+            <div asp-validation-summary="All" class="text-danger">
+                
+            </div>
+            @foreach (var item in Model)
+            {
         <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.IdPlat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdRestaurant)
-            </td>*@
+         
+                @* @Html.DisplayFor(modelItem => item.IdPlat)*@
+                <input asp-for="@item.IdPlat" type="hidden" />
+            
+           
+                @*  @Html.DisplayFor(modelItem => item.IdRestaurant)*@
+                <input asp-for="@item.IdRestaurant" type="hidden" />
+           
             <td>
                 @Html.DisplayFor(modelItem => item.Nom)
+                <input asp-for="@item.Nom" type="hidden" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Prix) CHF
+                <input asp-for="@item.Prix" type="hidden" />
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
+                <input asp-for="@item.Description" type="hidden" />
             </td>
-            <td>
-                @Html.ActionLink("Ajouter au panier", "Commander", new { id=item.IdPlat })
+            <td class="form-group">
+                <input asp-for="@item.Quantite" class="form-control" />
+                <span asp-validation-for="@item.Quantite" class="text-danger"></span>
             </td>
+            <td class="form-group">
+                <input type="submit" value="Ajouter au panier" class="btn btn-primary" />
+            </td>
+
+            @* <td>
+            @Html.ActionLink("Ajouter au panier", "Commander", new { id = item.IdPlat, quantite = item.Quantite })
+        </td>*@
         </tr>
-}
-    </tbody>
+        }
+        </form>
+        </tbody>
 </table>
 
 
 <p>
     @Html.ActionLink("Commander", "Terminer")
 </p>
+
+@section Scripts {@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}}

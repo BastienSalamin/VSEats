@@ -1,10 +1,10 @@
-﻿@model IEnumerable<WebApp.Models.PanierVM>
+﻿@model WebApp.Models.PanierVM
 
 @{
     ViewData["Title"] = "Panier";
 }
 
-<h1>Mon Panier</h1>
+<h1>Mon panier</h1>
 
 <p>
     <a asp-action="Historique">Historique de mes commandes</a>
@@ -13,54 +13,64 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.IdPlat)
+                IdPlat
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nom)
+                Nom
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Prix)
+                Prix
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantite)
+                Quantité
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HeureLivraison)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-        <form asp-action="Edit">
-            @foreach (var item in Model)
+        @if(Model.Items != null && Model.Items.Any())
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdPlat)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nom)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Prix) CHF
-                </td>
-                <td>
-                    <input asp-for="modelItem => @item.Quantite" class="form-control" />
-                    <span asp-validation-for="modelItem => @item.Quantite" class="text-danger"></span>@* @Html.DisplayFor(modelItem => item.Quantite) *@
-                </td>
-                <td>
-                    <input asp-for="@item.HeureLivraison" class="form-control" data-date-format="hh:mm" type="text" />
-                    <span asp-validation-for="@item.HeureLivraison" class="text-danger"></span>
-                    
-                </td>
-                <td>
-                    @Html.ActionLink("Details", "Details", new { id = item.IdPlat })
-                </td>
-            </tr>
-        }
-        </form>
-        </tbody>
+            @foreach(var item in Model.Items)
+                {
+                    <tr>
+                        <td>
+                        @Html.DisplayFor(modelItem => item.IdPlat)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nom)
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => item.Prix) CHF
+                        </td>
+                        <td>
+                        @Html.DisplayFor(modelItem => item.Quantite)
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" align="center">
+                        Pas d'éléments
+                    </td>
+                </tr>
+            }
+    </tbody>
 </table>
-<p>
-    <a asp-action="Historique">Commander !</a>
-</p>
+
+<h5>Veuillez spécifier l'heure de livraison</h5>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="HeureLivraison" class="control-label"></label>
+                <input asp-for="HeureLivraison" class="form-control" data-date-format="hh:mm" type="text" />
+                <span asp-validation-for="HeureLivraison" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Commander" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
