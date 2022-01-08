@@ -1,0 +1,61 @@
+﻿@model WebApp.Models.CommandeVM
+
+@{
+    ViewData["Title"] = "Detail";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                IdPlat
+            </th>
+            <th>
+                IdRestaurant
+            </th>
+            <th>
+                Nom
+            </th>
+            <th>
+                Prix
+            </th>
+            <th>
+                Quantite
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+      
+        
+            @foreach(var item in Model.ListPlats)
+            {
+                <tr>
+                   
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdPlat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdRestaurant)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nom) 
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prix) CHF
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantite)
+                    </td>
+                </tr>
+            
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" align="center">
+                    Pas d'éléments
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

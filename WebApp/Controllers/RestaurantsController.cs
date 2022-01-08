@@ -112,31 +112,6 @@ namespace WebApp.Controllers
             return RedirectToAction("Index", "Commandes");
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Commander(CommandeVM debutCommande)
-        {
-            if (ModelState.IsValid)
-            {
-                var idCommande = HttpContext.Request.Cookies["IdCommande"];
 
-                if (idCommande != null)
-                {
-                    return RedirectToAction("Index", "Commandes");
-                }
-                else
-                {
-                    var prixTotal = debutCommande.Prix * debutCommande.Quantite;
-                    CommandesManager.Order(debutCommande.IdUtilisateur, 1, prixTotal, debutCommande.HeureLivraison); // Comment faire pour le livreur ?
-                    var idNewCommande = CommandesManager.GetIdCommande(debutCommande.IdUtilisateur, prixTotal, debutCommande.HeureLivraison);
-                    CommandesPlatsManager.AddQuantite(idNewCommande, debutCommande.IdPlat, debutCommande.Quantite);
-                    HttpContext.Response.Cookies.Append("IdCommande", idNewCommande.ToString());
-
-                    return RedirectToAction("Index", "Commandes");
-                }
-            }
-
-            return View(debutCommande);
-        }
     }
 }

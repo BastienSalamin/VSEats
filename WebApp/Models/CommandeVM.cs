@@ -8,16 +8,16 @@ namespace WebApp.Models
 {
     public class CommandeVM
     {
+
+        public int IdCommande { get; set; }
+        public int IdLivreur { get; set; }
+        public bool CommandeLivree { get; set; }
+        public double PrixTotal { get; set; }
+        public int TempsLivraison { get; set; }
         public int IdUtilisateur { get; set; }
-        public int IdPlat { get; set; }
-        public string Nom { get; set; }
-        public double Prix { get; set; }
-        [Required]
-        public int Quantite { get; set; }
-        [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm}")]
-        [DataType(DataType.Time)]
-        [Display(Name = "Heure de livraison")]
         public DateTime HeureLivraison { get; set; }
+
+        public List<ItemVM> ListPlats { get; set; }
+
     }
 }
