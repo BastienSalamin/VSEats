@@ -195,5 +195,35 @@ namespace WebApp.Controllers
                 return RedirectToAction("Index", "Login");
             }
         }
+
+        public ActionResult Delete(int id)
+        {
+
+            var idUser = HttpContext.Request.Cookies["IdUtilisateur"];
+
+            if (idUser != null)
+            {
+                var commande = CommandesManager.GetCommande(id);
+
+                TimeSpan t = commande.Date - DateTime.Now;
+
+                int tempsLivraison = (int)t.TotalMinutes;
+
+                if (tempsLivraison > 180)
+                {
+                    CommandesManager.DeleteCommande(id);
+                    return RedirectToAction("Historique");
+                }else
+                {
+                    return RedirectToAction("Detail", new { id = id });
+                }
+                    
+                
+            }
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
+        }
     }
 }

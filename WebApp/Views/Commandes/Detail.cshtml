@@ -25,37 +25,36 @@
         </tr>
     </thead>
     <tbody>
-      
-        
-            @foreach(var item in Model.ListPlats)
-            {
-                <tr>
-                   
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdPlat)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdRestaurant)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nom) 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Prix) CHF
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Quantite)
-                    </td>
-                </tr>
-            
-        }
-        else
+
+
+        @foreach (var item in Model.ListPlats)
         {
             <tr>
-                <td colspan="5" align="center">
-                    Pas d'éléments
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdPlat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdRestaurant)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prix) CHF
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantite)
                 </td>
             </tr>
+
         }
+
     </tbody>
 </table>
+
+
+<form asp-action="Delete">
+    @Html.ActionLink("Delete", "Delete", new { id = Model.IdCommande}) |
+    <a asp-action="Historique">Retour à l'historique</a>
+</form>

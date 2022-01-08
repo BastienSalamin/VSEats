@@ -18,6 +18,33 @@ namespace DAL
             Configuration = configuration;
         }
 
+        public int DeleteCommande(int idCommande)
+        {
+            int result = 0;
+            string connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(connectionString))
+                {
+                    string query = "DELETE Commandes Where IdCommande = @idCommande";
+                    SqlCommand cmd = new SqlCommand(query, cn);
+
+                    cmd.Parameters.AddWithValue("@idCommande", idCommande);
+
+                    cn.Open();
+
+                    result = cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return result;
+        }
+
         public int UpdateCommandeLivreur(int idLivreur, int idCommande)
         {
             int result = 0;

@@ -7,6 +7,7 @@ namespace DAL
     public interface ICommandesDB
     {
         int AddCommande(int idUtilisateur, int idLivreur, double prixTotal, int tempsLivraison, DateTime date);
+        int DeleteCommande(int idCommande);
         Commandes GetCommande(int idCommande);
         List<Commandes> GetCommandes();
         List<Commandes> GetCommandes(int idUser);

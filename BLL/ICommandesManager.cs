@@ -6,6 +6,7 @@ namespace BLL
 {
     public interface ICommandesManager
     {
+        int DeleteCommande(int idCommande);
         Commandes GetCommande(int idCommande);
         List<Commandes> GetCommandes();
         List<Commandes> GetCommandes(int idUser);

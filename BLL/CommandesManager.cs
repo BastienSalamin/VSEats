@@ -47,6 +47,12 @@ namespace BLL
             CommandesDb.AddCommande(idUtilisateur, idLivreur, prixTotal, tempsLivraison, date);
         }
 
+        //delete
+        public int DeleteCommande(int idCommande)
+        {
+            return CommandesDb.DeleteCommande(idCommande);
+        }
+
         //update
         public void UpdateDelivery(int idCommande)
         {
