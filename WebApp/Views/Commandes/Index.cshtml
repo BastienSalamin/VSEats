@@ -9,54 +9,64 @@
 <p>
     <a asp-action="Historique">Historique de mes commandes</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                IdPlat
-            </th>
-            <th>
-                Nom
-            </th>
-            <th>
-                Prix
-            </th>
-            <th>
-                Quantité
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (Model.Items != null && Model.Items.Any())
-        {
-            @foreach (var item in Model.Items)
+@using (Html.BeginForm("Index", "Commandes", FormMethod.Post))
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    IdPlat
+                </th>
+                <th>
+                    Nom
+                </th>
+                <th>
+                    Prix
+                </th>
+                <th>
+                    Quantité
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Items != null && Model.Items.Any())
+            {
+                @for(int i = 0; i < Model.Items.Count; i++)
+                {
+            <tr>
+                @Html.HiddenFor(modelItem => modelItem.Items[i].IdRestaurant)
+                @Html.HiddenFor(modelItem => modelItem.Items[i].Description)
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Items[i].IdPlat)
+                    @Html.HiddenFor(modelItem => modelItem.Items[i].IdPlat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Items[i].Nom)
+                    @Html.HiddenFor(modelItem => modelItem.Items[i].Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => modelItem.Items[i].Prix) CHF
+                    @Html.HiddenFor(modelItem => modelItem.Items[i].Prix)
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.Items[i].Quantite)
+                    @Html.HiddenFor(modelItem => modelItem.Items[i].Quantite)
+                </td>
+            </tr>
+                }
+            }
+            else
             {
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IdPlat)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nom)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Prix) CHF
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Quantite)
+                    <td colspan="5" align="center">
+                        Pas d'éléments
                     </td>
                 </tr>
             }
-        }
-        else
-        {
-            <tr>
-                <td colspan="5" align="center">
-                    Pas d'éléments
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+
+
 @if (Model.Items != null && Model.Items.Any())
 {
     <h5>Veuillez spécifier l'heure de livraison</h5>
@@ -76,4 +86,4 @@
         </div>
     </div>
 }
-
+}

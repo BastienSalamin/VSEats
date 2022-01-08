@@ -65,20 +65,7 @@ namespace WebApp.Controllers
 
                 if (plats != null)
                 {
-                    List<ItemVM> items = new List<ItemVM>();
-
-                    foreach (var plat in plats)
-                    {
-                        ItemVM element = new ItemVM();
-                        element.IdRestaurant = plat.IdRestaurant;
-                        element.Description = plat.Description;
-                        element.IdPlat = plat.IdPlat;
-                        element.Nom = plat.Nom;
-                        element.Prix = plat.Prix;
-                        items.Add(element);
-                    }
-
-                    return View(items);
+                    return View(plats);
                 }
                 else
                 {
@@ -91,32 +78,33 @@ namespace WebApp.Controllers
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Details(ItemVM itemvm)
+        public IActionResult Commander(int id)
         {
-            if (ModelState.IsValid)
+            var idUser = HttpContext.Request.Cookies["IdUtilisateur"];
+
+            if (idUser != null)
             {
                 var plats = PlatsManager.GetPlats();
                 int idRestaurant = 0;
 
                 foreach (var plat in plats)
                 {
-                    if (plat.IdPlat == itemvm.IdPlat)
+                    if (plat.IdPlat == id)
                     {
                         idRestaurant = plat.IdRestaurant;
                     }
                 }
 
                 /*Ajout du plat dans le panier*/
+                HttpContext.Response.Cookies.Append("IdPlat" + id.ToString(), "1");
 
-                HttpContext.Response.Cookies.Append("IdPlat" + itemvm.IdPlat.ToString(), itemvm.Quantite.ToString());
 
-
-                return RedirectToAction("Details", new { id = itemvm.IdRestaurant });
+                return RedirectToAction("Details", new { id = idRestaurant });
             }
-
-            return View(itemvm);
+            else
+            {
+                return RedirectToAction("Index", "Login");
+            }
         }
 
         public IActionResult Terminer()

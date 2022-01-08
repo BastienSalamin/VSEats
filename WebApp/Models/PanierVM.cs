@@ -9,7 +9,7 @@ namespace WebApp.Models
     public class PanierVM
     {
 
-        public IEnumerable<ItemVM> Items { get; set; }
+        public IList<ItemVM> Items { get; set; }
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm}")]
         [DataType(DataType.Time)]

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ItemVM>
+﻿@model IEnumerable<DTO.Plats>
 
 @{
     ViewData["Title"] = "Les Plats";
@@ -10,11 +10,11 @@
     <thead>
         <tr>
             @*<th>
-                @Html.DisplayNameFor(model => model.IdPlat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdRestaurant)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.IdPlat)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.IdRestaurant)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.Nom)
             </th>
@@ -24,37 +24,32 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            @using (Html.BeginForm("Details", "Restaurants", FormMethod.Post, new {itemvm = item }))
-            {
-                <tr>
-                    @Html.HiddenFor(modeItem => item.IdPlat)
-                    @Html.HiddenFor(modeItem => item.IdRestaurant)
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nom)
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.IdPlat)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Prix) CHF
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.TextBoxFor(modelItem => item.Quantite)
-                    </td>
-                    <td>
-                        <input type="submit" value="Ajouter au panier" class="btn btn-primary" />
-                        @*@Html.ActionLink("Ajouter au panier", "Details", new { id = item.IdPlat, quantite = item.Quantite })*@
-                    </td>
-                </tr>
-            }
+                        @Html.DisplayFor(modelItem => item.IdRestaurant)
+                    </td>*@
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prix) CHF
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.ActionLink("Ajouter au panier", "Commander", new { id = item.IdPlat })
+                </td>
+            </tr>
         }
     </tbody>
 </table>

@@ -52,17 +52,28 @@ namespace WebApp.Controllers
             return View(panier);
         }
 
-        public IActionResult Details(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Index(PanierVM panier)
         {
-            var idUser = HttpContext.Request.Cookies["IdUtilisateur"];
+            if (ModelState.IsValid)
+            {
+                foreach(var item in panier.Items)
+                {
+                    var idc = HttpContext.Request.Cookies["IdPlat" + item.IdPlat.ToString()];
+                    if(idc != null)
+                    {
+                        // Implémenter l'insertion de la commande dans la BD
 
-            if (idUser != null)
-            {   
+                        var quantite = item.Quantite;
+                    }
+                    
+                }
                 return View();
             }
             else
             {
-                return RedirectToAction("Index", "Login");
+                return View(panier);
             }
         }
 
