@@ -27,50 +27,53 @@
         </tr>
     </thead>
     <tbody>
-        @if(Model.Items != null && Model.Items.Any())
-            {
-            @foreach(var item in Model.Items)
-                {
-                    <tr>
-                        <td>
-                        @Html.DisplayFor(modelItem => item.IdPlat)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Nom)
-                        </td>
-                        <td>
-                        @Html.DisplayFor(modelItem => item.Prix) CHF
-                        </td>
-                        <td>
-                        @Html.DisplayFor(modelItem => item.Quantite)
-                        </td>
-                    </tr>
-                }
-            }
-            else
+        @if (Model.Items != null && Model.Items.Any())
+        {
+            @foreach (var item in Model.Items)
             {
                 <tr>
-                    <td colspan="5" align="center">
-                        Pas d'éléments
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IdPlat)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prix) CHF
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantite)
                     </td>
                 </tr>
             }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5" align="center">
+                    Pas d'éléments
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
-
-<h5>Veuillez spécifier l'heure de livraison</h5>
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Index">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="HeureLivraison" class="control-label"></label>
-                <input asp-for="HeureLivraison" class="form-control" data-date-format="hh:mm" type="text" />
-                <span asp-validation-for="HeureLivraison" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Commander" class="btn btn-primary" />
-            </div>
-        </form>
+@if (Model.Items != null && Model.Items.Any())
+{
+    <h5>Veuillez spécifier l'heure de livraison</h5>
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Index">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="HeureLivraison" class="control-label"></label>
+                    <input asp-for="HeureLivraison" class="form-control" data-date-format="hh:mm" type="text" />
+                    <span asp-validation-for="HeureLivraison" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Commander" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+}
+

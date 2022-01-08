@@ -92,6 +92,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Details(ItemVM itemvm)
         {
             if (ModelState.IsValid)
@@ -112,7 +113,7 @@ namespace WebApp.Controllers
                 HttpContext.Response.Cookies.Append("IdPlat" + itemvm.IdPlat.ToString(), itemvm.Quantite.ToString());
 
 
-                return RedirectToAction("Details", new { id = idRestaurant });
+                return RedirectToAction("Details", new { id = itemvm.IdRestaurant });
             }
 
             return View(itemvm);
