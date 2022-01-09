@@ -25,11 +25,6 @@ namespace WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddScoped<ICategoriesDB, CategoriesDB>();
-            services.AddScoped<ICategoriesManager, CategoriesManager>();
-            services.AddScoped<ICategoriesPlatsDB, CategoriesPlatsDB>();
-            services.AddScoped<ICategoriesPlatsManager, CategoriesPlatsManager>();
             services.AddScoped<ICommandesDB, CommandesDB>();
             services.AddScoped<ICommandesManager, CommandesManager>();
             services.AddScoped<ICommandesPlatsDB, CommandesPlatsDB>();
@@ -42,8 +37,6 @@ namespace WebApp
             services.AddScoped<IPlatsManager, PlatsManager>();
             services.AddScoped<IRestaurantsDB, RestaurantsDB>();
             services.AddScoped<IRestaurantsManager, RestaurantsManager>();
-            services.AddScoped<IRevuesDB, RevuesDB>();
-            services.AddScoped<IRevuesManager, RevuesManager>();
             services.AddScoped<IUtilisateursDB, UtilisateursDB>();
             services.AddScoped<IUtilisateursManager, UtilisateursManager>();
 
