@@ -17,4 +17,5 @@ namespace WebApp.Models
         public DateTime HeureLivraison { get; set; }
 
     }
+
 }
