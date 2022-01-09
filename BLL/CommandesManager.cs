@@ -11,33 +11,23 @@ namespace BLL
 {
     public class CommandesManager : ICommandesManager
     {
-        // Création de deux références privées
+        // Création des références privées
         private ICommandesDB CommandesDb { get; }
         private IUtilisateursDB UtilisateursDb { get; }
         private ILivreursDB LivreursDb { get; }
-        private IPlatsDB PlatsDb { get; }
-        private ICommandesPlatsDB CommandesPlatsDb { get; }
 
 
         // Création du constructeur pour instancier la DAL
-        public CommandesManager(ICommandesDB commandesDb, IUtilisateursDB utilisateursDb, ILivreursDB livreursDb, IPlatsDB platsDb, ICommandesPlatsDB commandesPlatsDb)
+        public CommandesManager(ICommandesDB commandesDb, IUtilisateursDB utilisateursDb, ILivreursDB livreursDb)
         {
             CommandesDb = commandesDb;
             UtilisateursDb = utilisateursDb;
             LivreursDb = livreursDb;
-            PlatsDb = platsDb;
-            CommandesPlatsDb = commandesPlatsDb;
         }
 
-        //liste des méthodes utilisateurs
-
-
-        //Add
-
-        //Plusieurs var demandées, faut-il les calculer ici?
-        //dont: le prixTotal à calculer,
-        //
-        //Remarque: l'utilisateur choisi la DateTime à laquelle il veut se faire livrer
+        // Liste des méthodes utilisateurs
+        // Add
+        // Remarque: l'utilisateur choisi la DateTime à laquelle il veut se faire livrer
         public void Order(int idUtilisateur, int idLivreur, double prixTotal, DateTime date)
         {
             TimeSpan t = date - DateTime.Now;
@@ -47,13 +37,13 @@ namespace BLL
             CommandesDb.AddCommande(idUtilisateur, idLivreur, prixTotal, tempsLivraison, date);
         }
 
-        //delete
+        // Delete
         public int DeleteCommande(int idCommande)
         {
             return CommandesDb.DeleteCommande(idCommande);
         }
 
-        //update
+        //Update
         public void UpdateDelivery(int idCommande)
         {
             CommandesDb.UpdateCommandeLivree(idCommande);
@@ -64,7 +54,7 @@ namespace BLL
             return CommandesDb.UpdateCommandeLivreur(idLivreur, idCommande);
         }
 
-        //les getters
+        // Les Getters
         public List<Commandes> GetCommandes()
         {
             return CommandesDb.GetCommandes();

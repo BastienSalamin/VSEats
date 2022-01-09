@@ -64,6 +64,7 @@ namespace WebApp.Controllers
 
                 var commande = CommandesManager.GetCommande(idCommande);
 
+                // En premier, vérifier si le livreur connecté peut prendre de nouvelles commandes
                 var livreur1 = LivreursManager.GetLivreurs(idLivreur);
 
                 if(livreur1.Disponible == false)
@@ -71,12 +72,14 @@ namespace WebApp.Controllers
                     return RedirectToAction("Index");
                 }
 
+                // En second, vérifier que la commande que veut récupérer le livreur connecté soit attribué au livreur par défaut
                 if (commande.IdLivreur == 1)
                 {
                     CommandesManager.UpdateCommandeLivreur(idLivreur, idCommande);
 
                     LivreursManager.AddCommande(idLivreur);
 
+                    // Et changer la disponibilité du livreur si c'est sa 5e commande à livrer
                     var livreur2 = LivreursManager.GetLivreurs(idLivreur);
 
                     if (livreur2.NbCommande == 5)
@@ -204,6 +207,7 @@ namespace WebApp.Controllers
 
                 var commande = CommandesManager.GetCommande(idCommande);
 
+                // Vérifier que l'IdLivreur de la commande à délivrer corresponde au livreur connecté, que ce ne soit pas le livreur par défaut
                 if (commande.IdLivreur == idLivreur && idLivreur != 1)
                 {
                     CommandesManager.UpdateDelivery(idCommande);
@@ -212,6 +216,7 @@ namespace WebApp.Controllers
 
                     var livreur = LivreursManager.GetLivreurs(idLivreur);
 
+                    // Et changer la disponibilité du livreur s'il a livré sa 5e commande
                     if (livreur.NbCommande < 5)
                     {
                         LivreursManager.UpdateDisponibilite(idLivreur, true);

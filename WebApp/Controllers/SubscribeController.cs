@@ -47,7 +47,7 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                // vérifier qu'il n'y ait pas d'utilisateurs avec le même login
+                // Vérifier qu'il n'y ait pas d'utilisateurs avec le même login
                 var listeUsers = UtilisateursManager.GetUtilisateurs();
 
                 foreach (var user in listeUsers)
@@ -59,7 +59,7 @@ namespace WebApp.Controllers
                     }
                 }
 
-                // vérifier que la localité existe
+                // Vérifier que la localité existe
                 var localites = LocalitesManager.GetLocalites();
 
                 foreach(var localite in localites)
@@ -88,7 +88,7 @@ namespace WebApp.Controllers
             return View(subscribeVM);
         }
 
-        //pour Edit les données
+        // Pour Edit les données utilisateurs
         public IActionResult Edit()
         {
             var id = HttpContext.Request.Cookies["IdUtilisateur"];

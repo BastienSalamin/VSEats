@@ -14,7 +14,7 @@ namespace DTO
         public bool CommandeLivree { get; set; }
         public double PrixTotal { get; set; }
         public DateTime Date { get; set; }
-        public int TempsLivraison { get; set; } /*temps d'attente en min*/
+        public int TempsLivraison { get; set; } /*Temps d'attente en minutes, par rapport au moment où la commande a été passée*/
 
         public override string ToString()
         {

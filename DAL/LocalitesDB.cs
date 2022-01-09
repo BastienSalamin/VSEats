@@ -18,7 +18,6 @@ namespace DAL
             Configuration = configuration;
         }
 
-        //les getters
         public int GetLocalite(int npa)
         {
             int result = 0;

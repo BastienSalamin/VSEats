@@ -11,18 +11,18 @@ namespace BLL
 {
     public class RestaurantsManager : IRestaurantsManager
     {
-        // Création de références privées
+        // Création des références privées
         private IRestaurantsDB RestaurantsDb { get; }
 
-        //Création du constructeur pour instancier la DAL
+        // Création du constructeur pour instancier la DAL
         public RestaurantsManager(IRestaurantsDB restaurantsDb)
         {
             RestaurantsDb = restaurantsDb;
         }
 
-        //liste des méthodes
+        // Liste des méthodes
 
-        //les getters
+        // Les getters
         public List<Restaurants> GetRestaurants()
         {
             return RestaurantsDb.GetRestaurants();

@@ -11,23 +11,22 @@ namespace BLL
 {
     public class CommandesPlatsManager : ICommandesPlatsManager
     {
-        // Création de références privées
+        // Création des références privées
         private ICommandesPlatsDB CommandesPlatsDb { get; }
 
         // Création du constructeur pour instancier la DAL
         public CommandesPlatsManager(ICommandesPlatsDB commandesPlatsDb)
         {
             CommandesPlatsDb = commandesPlatsDb;
-
         }
 
-        //liste des méthodes utilisateurs
+        // Liste des méthodes utilisateurs
         public int AddQuantite(int idCommande, int idPlat, int quantite)
         {
             return CommandesPlatsDb.AddQuantite(idCommande, idPlat, quantite);
         }
 
-        //les getters
+        // Les Getters
         public List<CommandesPlats> GetCommandesPlats()
         {
             return CommandesPlatsDb.GetCommandesPlats();

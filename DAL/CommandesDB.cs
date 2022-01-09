@@ -118,8 +118,8 @@ namespace DAL
                     cmd.Parameters.AddWithValue("@idLivreur", idLivreur);
                     cmd.Parameters.AddWithValue("@commandeLivree", false);
                     cmd.Parameters.AddWithValue("@PrixTotal", prixTotal);
-                    cmd.Parameters.AddWithValue("@date", date); /*Temps maximal auquel il veut être livré. Tranches de 15min. A soustraire 15min pour obtenir la fourchette.*/
-                    cmd.Parameters.AddWithValue("@tempsLivraison", tempsLivraison); /*calcul entre le temps de maintenant et le temps maximal*/
+                    cmd.Parameters.AddWithValue("@date", date); /* Date à laquelle l'utilisateur veut être livré. Tranches de 15 min. A soustraire 15 min pour obtenir la fourchette.*/
+                    cmd.Parameters.AddWithValue("@tempsLivraison", tempsLivraison); /* Calcul entre le temps de maintenant et la date de livraison.*/
 
                     cn.Open();
 

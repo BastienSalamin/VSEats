@@ -28,6 +28,7 @@ namespace WebApp.Controllers
 
             if (id != null)
             {
+                // Ressortir l'IdLocalité de l'utilisateur pour que seuls les restaurants ayant le même IdLocalité soient affichés
                 int idUser = Int32.Parse(id);
 
                 var util = UtilisateursManager.GetUserId(idUser);
@@ -91,7 +92,7 @@ namespace WebApp.Controllers
                     }
                 }
 
-                /*Ajout du plat dans le panier*/
+                /*Ajout du plat dans le panier en créant un cookie possédant l'IdPlat, et sa quantité mise par défaut à 1*/
                 HttpContext.Response.Cookies.Append("IdPlat" + id.ToString(), "1");
 
 

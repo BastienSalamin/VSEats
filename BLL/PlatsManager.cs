@@ -11,19 +11,18 @@ namespace BLL
 {
     public class PlatsManager : IPlatsManager
     {
-        // Création de références privées
+        // Création des références privées
         private IPlatsDB PlatsDb { get; }
 
         // Création du constructeur pour instancier la DAL
         public PlatsManager(IPlatsDB platsDb)
         {
             PlatsDb = platsDb;
-
         }
 
-        //liste des méthodes
+        // Liste des méthodes
 
-        //les getters
+        // Les Getters
         public int GetPlatID(string nom, int idRestaurant)
         {
             return PlatsDb.GetPlatID(nom, idRestaurant);

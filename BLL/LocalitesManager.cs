@@ -11,19 +11,18 @@ namespace BLL
 {
     public class LocalitesManager : ILocalitesManager
     {
-        // Création de références privées
+        // Création des références privées
         private ILocalitesDB LocalitesDb { get; }
 
         // Création du constructeur pour instancier la DAL
         public LocalitesManager(ILocalitesDB localitesDb)
         {
-
             LocalitesDb = localitesDb;
         }
 
-        //liste des méthodes utilisateurs
+        // Liste des méthodes utilisateurs
 
-        //les getters
+        // Les Getters
         public int GetLocalite(int npa)
         {
             return LocalitesDb.GetLocalite(npa);

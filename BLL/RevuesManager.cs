@@ -11,7 +11,7 @@ namespace BLL
 {
     public class RevuesManager : IRevuesManager
     {
-        // Création de références privées
+        // Création des références privées
         private IRevuesDB RevuesDb { get; }
 
         // Création du constructeur pour instancier la DAL
@@ -20,13 +20,13 @@ namespace BLL
             RevuesDb = revuesDb;
         }
 
-        //liste des méthodes
+        // Liste des méthodes
         public void AddRevue(int idUtilisateur, int idRestaurant, int etoiles, string commentaire)
         {
             RevuesDb.AddRevue(idUtilisateur, idRestaurant, etoiles, commentaire);
         }
 
-        //les getters
+        // Les Getters
         public List<Revues> GetRevues()
         {
             return RevuesDb.GetRevues();

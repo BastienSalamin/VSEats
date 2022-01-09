@@ -12,7 +12,7 @@ namespace DTO
         public int IdLocalite { get; set; }
         public string Nom { get; set; }
         public string Prenom { get; set; }
-        public string Login { get; set; } /*correspond au mail*/
+        public string Login { get; set; } /*Correspond à l'e-mail*/
         public string MotDePasse { get; set; }
         public string Adresse { get; set; }
         public string NumTelephone { get; set; }

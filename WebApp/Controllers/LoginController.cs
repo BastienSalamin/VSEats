@@ -26,6 +26,7 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
+            // Empêcher qu'un livreur connecté puisse se connecter en tant qu'utilisateur
             var id = HttpContext.Request.Cookies["IdLivreur"];
 
             if (id != null)
@@ -66,8 +67,10 @@ namespace WebApp.Controllers
 
         public IActionResult Unlog()
         {
+            // Supprimer le cookie correspondant à l'utilisateur connecté
             HttpContext.Response.Cookies.Delete("IdUtilisateur");
 
+            // Supprimer les cookies correspondants aux plats ajoutés au panier pour vider ce dernier
             var plats = PlatsManager.GetPlats();
 
             foreach(var plat in plats)
@@ -86,6 +89,7 @@ namespace WebApp.Controllers
 
         public IActionResult LivreurIndex()
         {
+            // Si le livreur est déjà connecté, le rediriger directement à la page d'index des livreurs
             var id = HttpContext.Request.Cookies["IdLivreur"];
 
             if(id != null)

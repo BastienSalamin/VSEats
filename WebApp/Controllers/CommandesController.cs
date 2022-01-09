@@ -35,6 +35,7 @@ namespace WebApp.Controllers
 
             if (idUser != null)
             {
+                // Création du panier à l'aide des cookies correspondant au plats ajoutés au panier
                 List<ItemVM> items = new List<ItemVM>();
 
                 var plats = PlatsManager.GetPlats();

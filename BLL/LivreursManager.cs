@@ -11,7 +11,7 @@ namespace BLL
 {
     public class LivreursManager : ILivreursManager
     {
-        // Création de références privées
+        // Création des références privées
         private ILivreursDB LivreursDb { get; }
 
         // Création du constructeur pour instancier la DAL
@@ -20,7 +20,7 @@ namespace BLL
             LivreursDb = livreursDb;
         }
 
-        //liste des méthodes utilisateurs
+        // Liste des méthodes utilisateurs
         public void UpdateDisponibilite(int livreur, bool disponible)
         {
             LivreursDb.UpdateDisponibilite(livreur, disponible);
@@ -74,7 +74,7 @@ namespace BLL
             }
         }
 
-        //les getters
+        // Les Getters
         public List<Livreurs> GetLivreurs()
         {
             return LivreursDb.GetLivreurs();

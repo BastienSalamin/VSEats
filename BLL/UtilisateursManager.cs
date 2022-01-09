@@ -11,7 +11,7 @@ namespace BLL
 {
     public class UtilisateursManager : IUtilisateursManager
     {
-        // Création de références privées
+        // Création des références privées
         private IUtilisateursDB UtilisateursDb { get; }
         private ILocalitesDB LocalitesDb { get; }
 
@@ -24,10 +24,9 @@ namespace BLL
         }
 
 
-        //liste des méthodes utilisateurs
+        // Liste des méthodes utilisateurs
         public void Subscribe(int npa, string nom, string prenom, string login, string motDePasse, string adresse, string numTelephone)
         {
-
             var idLocalite = LocalitesDb.GetLocalite(npa);
 
             UtilisateursDb.AddUtilisateur(idLocalite, nom, prenom, login, motDePasse, adresse, numTelephone);
@@ -35,7 +34,6 @@ namespace BLL
 
         public Boolean CanConnect(string email, string motDePasse)
         {
-
             Boolean canConnect;
 
             var utilisateur = UtilisateursDb.GetUtilisateurs(email, motDePasse);
@@ -66,7 +64,7 @@ namespace BLL
             }
         }
 
-        //les getters
+        // Les Getters
         public List<Utilisateurs> GetUtilisateurs()
         {
             return UtilisateursDb.GetUtilisateurs();
@@ -85,7 +83,7 @@ namespace BLL
             return UtilisateursDb.GetUtilisateurs(idUtilisateur);
         }
 
-        //Update
+        // Update
         public int Update(int npa, string nom, string prenom, string login, string motDePasse, string adresse, string numTelephone)
         {
 
