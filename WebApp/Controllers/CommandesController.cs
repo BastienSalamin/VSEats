@@ -15,14 +15,18 @@ namespace WebApp.Controllers
         private IPlatsManager PlatsManager { get; }
         private IRestaurantsManager RestaurantsManager { get; }
         private ILocalitesManager LocalitesManager { get; }
+        private IUtilisateursManager UtilisateursManager { get; }
+        private ILivreursManager LivreursManager { get; }
 
-        public CommandesController(ICommandesManager commandesManager, IPlatsManager platsManager, ICommandesPlatsManager commandesPlatsManager, IRestaurantsManager restaurantsManager,ILocalitesManager localitesManager)
+        public CommandesController(ICommandesManager commandesManager, IPlatsManager platsManager, ICommandesPlatsManager commandesPlatsManager, IRestaurantsManager restaurantsManager, ILocalitesManager localitesManager, ILivreursManager livreursManager, IUtilisateursManager utilisateursManager)
         {
             LocalitesManager = localitesManager;
             RestaurantsManager = restaurantsManager;
             CommandesPlatsManager = commandesPlatsManager;
             CommandesManager = commandesManager;
             PlatsManager = platsManager;
+            LivreursManager = livreursManager;
+            UtilisateursManager = utilisateursManager;
         }
 
         public IActionResult Index()
@@ -74,22 +78,62 @@ namespace WebApp.Controllers
             {
                 var idUtilisateur = Int32.Parse(HttpContext.Request.Cookies["IdUtilisateur"]);
 
-                // --> ! Faire le contrôle du livreur ici ! <-- \\
-                var idLivreur = 1;
-
+                // Bloquer le passage de la commande si les minutes sont négatives (== l'heure de livraison est inférieure à maintenant)
                 var dateTime = panier.HeureLivraison;
+                TimeSpan t = panier.HeureLivraison - DateTime.Now;
+
+                int tempsLivraison = (int)t.TotalMinutes;
+
+                if (tempsLivraison < 0)
+                {
+                    return View(panier);
+                }
+
+                // Contrôle du livreur
+                var idLivreur = 0;
+
+                var utilisateur = UtilisateursManager.GetUserId(idUtilisateur);
+
+                var livreurs = LivreursManager.GetLivreurs();
+                
+                foreach(var livreur in livreurs)
+                {
+                    if(livreur.IdLocalite == utilisateur.IdLocalite)
+                    {
+                        if(livreur.Disponible == true)
+                        {
+                            if (livreur.NbCommande == 4)
+                            {
+                                LivreursManager.UpdateDisponibilite(idLivreur, false);
+                            }
+
+                            LivreursManager.AddCommande(livreur.IdLivreur);
+
+                            idLivreur = livreur.IdLivreur;
+                            break;
+                        }
+                    }
+                }
+
+                // Attribution d'un livreur par défaut si l'idLivreur est resté à 0
+                if (idLivreur == 0)
+                {
+                    idLivreur = 1;
+                }
+
+                // Création de la commande dans la table dédiée
                 double prixTotal = 0;
 
                 foreach (var item in panier.Items)
                 {
                     var prix = item.Prix;
                     var quantite = item.Quantite;
-                    prixTotal = prixTotal +( prix * quantite);
-
+                    prixTotal = prixTotal +(prix * quantite);
                 }
 
                 CommandesManager.Order(idUtilisateur, idLivreur, prixTotal, dateTime);
 
+                // Ajout de la quantité et de l'idplat dans la table CommandesPlats à l'aide de l'idCommande de la commande tout juste créée
                 var idCommande = CommandesManager.GetIdCommande(idUtilisateur, prixTotal, dateTime);
 
                 foreach(var item in panier.Items)
@@ -100,6 +144,7 @@ namespace WebApp.Controllers
                     CommandesPlatsManager.AddQuantite(idCommande, idPlat, quantite);
                 }
 
+                // Supprimer les cookies concernant les plats pour vider le panier
                 var plats = PlatsManager.GetPlats();
 
                 foreach (var plat in plats)
@@ -235,20 +280,33 @@ namespace WebApp.Controllers
 
         public IActionResult Delete(int id)
         {
-
             var idUser = HttpContext.Request.Cookies["IdUtilisateur"];
 
             if (idUser != null)
             {
                 var commande = CommandesManager.GetCommande(id);
 
+                // Contrôle pour que la date voulue de livraison soit supérieure à 3 heures
                 TimeSpan t = commande.Date - DateTime.Now;
 
                 int tempsLivraison = (int)t.TotalMinutes;
 
                 if (tempsLivraison > 180)
                 {
+                    if(commande.IdLivreur != 1)
+                    {
+                        LivreursManager.RemoveCommande(commande.IdLivreur);
+
+                        var livreur = LivreursManager.GetLivreurs(commande.IdLivreur);
+
+                        if (livreur.NbCommande < 5)
+                        {
+                            LivreursManager.UpdateDisponibilite(commande.IdLivreur, true);
+                        }
+                    }
+
                     CommandesManager.DeleteCommande(id);
+
                     return RedirectToAction("Historique");
                 }
                 else

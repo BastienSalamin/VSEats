@@ -4,11 +4,8 @@
     ViewData["Title"] = "Historique";
 }
 
-<h1>Historique</h1>
+<h1>Historique de mes commandes</h1>
 
-<p>
-    <a asp-action="Index" asp-controller="Restaurants">Nouvelle commande</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -67,3 +64,7 @@
 }
     </tbody>
 </table>
+
+<p>
+    <a asp-action="Index" asp-controller="Restaurants" class="btn btn-primary">Nouvelle commande</a>
+</p>

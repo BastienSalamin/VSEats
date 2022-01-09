@@ -14,16 +14,12 @@ namespace WebApp.Controllers
         private IRestaurantsManager RestaurantsManager { get; }
         private IUtilisateursManager UtilisateursManager { get; }
         private IPlatsManager PlatsManager { get; }
-        private ICommandesManager CommandesManager { get; }
-        private ICommandesPlatsManager CommandesPlatsManager { get; }
 
-        public RestaurantsController(IRestaurantsManager restaurantsManager, IUtilisateursManager utilisateursManager, IPlatsManager platsManager, ICommandesManager commandesManager, ICommandesPlatsManager commandesPlatsManager)
+        public RestaurantsController(IRestaurantsManager restaurantsManager, IUtilisateursManager utilisateursManager, IPlatsManager platsManager)
         {
             RestaurantsManager = restaurantsManager;
             UtilisateursManager = utilisateursManager;
             PlatsManager = platsManager;
-            CommandesManager = commandesManager;
-            CommandesPlatsManager = commandesPlatsManager;
         }
 
         public IActionResult Index()
@@ -111,7 +107,6 @@ namespace WebApp.Controllers
         {
             return RedirectToAction("Index", "Commandes");
         }
-
 
     }
 }

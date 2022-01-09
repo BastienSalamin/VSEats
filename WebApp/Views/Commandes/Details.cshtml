@@ -4,7 +4,7 @@
     ViewData["Title"] = "Détails de commande";
 }
 
-<h4>Détails de ma commande</h4>
+<h2>Détails de ma commande</h2>
 
 <div>
     <hr />
@@ -96,6 +96,6 @@
     }
 </div>
 <div>
-    @Html.ActionLink("Delete", "Delete", new { id = Model.IdCommande }) |
+    @Html.ActionLink("Supprimer cette commande", "Delete", new { id = Model.IdCommande }) |
     <a asp-action="Historique">Retour à l'historique</a>
 </div>

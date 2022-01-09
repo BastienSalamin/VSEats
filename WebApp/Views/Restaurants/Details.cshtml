@@ -4,7 +4,7 @@
     ViewData["Title"] = "Les Plats";
 }
 
-<h1>Liste des plats</h1>
+<h2>Liste des plats</h2>
 
 <table class="table">
     <thead>
@@ -56,5 +56,5 @@
 
 
 <p>
-    @Html.ActionLink("Commander", "Terminer")
+    <a asp-action="Terminer" class="btn btn-primary">Commander</a>
 </p>
