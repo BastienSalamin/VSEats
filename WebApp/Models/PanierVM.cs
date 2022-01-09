@@ -11,7 +11,7 @@ namespace WebApp.Models
 
         public IList<ItemVM> Items { get; set; }
         [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:hh:mm}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:HH:mm}")]
         [DataType(DataType.Time)]
         [Display(Name = "Heure de livraison")]
         public DateTime HeureLivraison { get; set; }

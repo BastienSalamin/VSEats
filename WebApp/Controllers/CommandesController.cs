@@ -10,11 +10,11 @@ namespace WebApp.Controllers
 {
     public class CommandesController : Controller
     {
-        private ICommandesPlatsManager CommandesPlatsManager { get; set; }
-        private ICommandesManager CommandesManager { get; set; }
-        private IPlatsManager PlatsManager { get; set; }
-        private IRestaurantsManager RestaurantsManager { get; set; }
-        private ILocalitesManager LocalitesManager { get; set; }
+        private ICommandesPlatsManager CommandesPlatsManager { get; }
+        private ICommandesManager CommandesManager { get; }
+        private IPlatsManager PlatsManager { get; }
+        private IRestaurantsManager RestaurantsManager { get; }
+        private ILocalitesManager LocalitesManager { get; }
 
         public CommandesController(ICommandesManager commandesManager, IPlatsManager platsManager, ICommandesPlatsManager commandesPlatsManager, IRestaurantsManager restaurantsManager,ILocalitesManager localitesManager)
         {
@@ -27,35 +27,43 @@ namespace WebApp.Controllers
 
         public IActionResult Index()
         {
-            List<ItemVM> items= new List<ItemVM>();
+            var idUser = HttpContext.Request.Cookies["IdUtilisateur"];
 
-            var plats = PlatsManager.GetPlats();
-
-            foreach (var plat in plats)
+            if (idUser != null)
             {
-                var id = plat.IdPlat.ToString();
-                var idc = HttpContext.Request.Cookies["IdPlat" + id];
+                List<ItemVM> items = new List<ItemVM>();
 
-                if (idc != null)
+                var plats = PlatsManager.GetPlats();
+
+                foreach (var plat in plats)
                 {
-                    ItemVM element = new ItemVM();
-                    element.IdRestaurant = plat.IdRestaurant;
-                    element.Description = plat.Description;
-                    element.IdPlat = plat.IdPlat;
-                    element.Nom = plat.Nom;
-                    element.Prix = plat.Prix;
-                    element.Quantite = Int32.Parse(idc);
-                    items.Add(element);
+                    var id = plat.IdPlat.ToString();
+                    var idc = HttpContext.Request.Cookies["IdPlat" + id];
+
+                    if (idc != null)
+                    {
+                        ItemVM element = new ItemVM();
+                        element.IdPlat = plat.IdPlat;
+                        element.Nom = plat.Nom;
+                        element.Prix = plat.Prix;
+                        element.Quantite = Int32.Parse(idc);
+                        items.Add(element);
+                    }
                 }
+
+                PanierVM panier = new PanierVM()
+                {
+                    Items = items,
+                    HeureLivraison = DateTime.Now
+                };
+
+                return View(panier);
             }
-
-            PanierVM panier = new PanierVM()
+            else
             {
-                Items = items,
-                HeureLivraison = DateTime.Now
-            };
-
-            return View(panier);
+                return RedirectToAction("Index", "Login");
+            }
+                
         }
 
         [HttpPost]
@@ -64,34 +72,32 @@ namespace WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var idUtilisateur = Int32.Parse(HttpContext.Request.Cookies["IdUtilisateur"]);
+
+                // --> ! Faire le contrôle du livreur ici ! <-- \\
                 var idLivreur = 1;
+
                 var dateTime = panier.HeureLivraison;
                 double prixTotal = 0;
 
                 foreach (var item in panier.Items)
                 {
-  
                     var prix = item.Prix;
                     var quantite = item.Quantite;
                     prixTotal = prixTotal +( prix * quantite);
 
                 }
 
-                
-                
                 CommandesManager.Order(idUtilisateur, idLivreur, prixTotal, dateTime);
 
                 var idCommande = CommandesManager.GetIdCommande(idUtilisateur, prixTotal, dateTime);
 
-                foreach(var item in panier.Items){
-
+                foreach(var item in panier.Items)
+                {
                     var idPlat = item.IdPlat;
                     var quantite = item.Quantite;
 
                     CommandesPlatsManager.AddQuantite(idCommande, idPlat, quantite);
-
                 }
 
                 var plats = PlatsManager.GetPlats();
@@ -138,14 +144,13 @@ namespace WebApp.Controllers
             }
         }
 
-        public IActionResult Detail(int id)
+        public IActionResult Details(int id)
         {
-
             var idUser = HttpContext.Request.Cookies["IdUtilisateur"];
 
             if (idUser != null)
             {
-
+                // Ajout des éléments concernant strictement la commande
                 CommandeVM commande = new CommandeVM();
                 List<ItemVM> listItemVm = new List<ItemVM>();
 
@@ -159,6 +164,7 @@ namespace WebApp.Controllers
                 commande.HeureLivraison = commandeDb.Date;
                 commande.TempsLivraison = commandeDb.TempsLivraison;
 
+                // Ajout des éléments concernant les plats commandés
                 var commandePlats = CommandesPlatsManager.GetCommandesPlats();
 
                 foreach (var commandePlat in commandePlats)
@@ -188,6 +194,37 @@ namespace WebApp.Controllers
 
                 commande.ListPlats = listItemVm;
 
+                // Ajout des informations concernant les restaurants
+                var restaurants = RestaurantsManager.GetRestaurants();
+
+                foreach (var item in commande.ListPlats)
+                {
+                    foreach(var restaurant in restaurants)
+                    {
+                        if(item.IdRestaurant == restaurant.IdRestaurant)
+                        {
+                            item.IdLocalite = restaurant.IdLocalite;
+                            item.NomRestaurant = restaurant.Nom;
+                            item.Adresse = restaurant.Adresse;
+                        }
+                    }
+                }
+
+                // Ajout des informations concernant la localité du restaurant
+                var localites = LocalitesManager.GetLocalites();
+
+                foreach (var item in commande.ListPlats)
+                {
+                    foreach (var localite in localites)
+                    {
+                        if (item.IdLocalite == localite.IdLocalite)
+                        {
+                            item.NPA = localite.NPA;
+                            item.Ville = localite.Ville;
+                        }
+                    }
+                }
+
                 return View(commande);
             }
             else
@@ -196,7 +233,7 @@ namespace WebApp.Controllers
             }
         }
 
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
 
             var idUser = HttpContext.Request.Cookies["IdUtilisateur"];
@@ -213,9 +250,10 @@ namespace WebApp.Controllers
                 {
                     CommandesManager.DeleteCommande(id);
                     return RedirectToAction("Historique");
-                }else
+                }
+                else
                 {
-                    return RedirectToAction("Detail", new { id = id });
+                    return RedirectToAction("Details", new { id = id });
                 }
                     
                 

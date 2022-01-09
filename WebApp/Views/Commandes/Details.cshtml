@@ -2,54 +2,11 @@
 
 @{
     ViewData["Title"] = "Détails de commande";
-
-    var npaCookie = Context.Request.Cookies["LocaliteNPA"];
-
-    var villeCookie = Context.Request.Cookies["LocaliteVille"];
 }
 
-<h1>Détails de l'utilisateur et de sa commande</h1>
+<h4>Détails de ma commande</h4>
 
 <div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.IdUtilisateur)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.IdUtilisateur)
-        </dd>
-        <dt class="col-sm-2">
-            Utilisateur
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Nom) @Html.DisplayFor(model => model.Prenom)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NumTelephone)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NumTelephone)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Adresse)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Adresse)
-        </dd>
-        <dt class="col-sm-2">
-            NPA
-        </dt>
-        <dd class="col-sm-10">
-            @npaCookie
-        </dd>
-        <dt class="col-sm-2">
-            Ville
-        </dt>
-        <dd class="col-sm-10">
-            @villeCookie
-        </dd>
-    </dl>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -139,5 +96,6 @@
     }
 </div>
 <div>
-    <a asp-action="Index">Retourner à la liste de commandes</a>
+    @Html.ActionLink("Delete", "Delete", new { id = Model.IdCommande }) |
+    <a asp-action="Historique">Retour à l'historique</a>
 </div>

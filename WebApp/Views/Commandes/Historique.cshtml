@@ -52,16 +52,16 @@
                 @Html.DisplayFor(modelItem => item.CommandeLivree)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PrixTotal)
+                @Html.DisplayFor(modelItem => item.PrixTotal) CHF
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TempsLivraison)
+                @Html.DisplayFor(modelItem => item.TempsLivraison) minutes
             </td>
             <td>
-                @Html.ActionLink("Detail", "Detail", new {  id=item.IdCommande  })
+                @Html.ActionLink("Détails", "Details", new {  id=item.IdCommande  })
             </td>
         </tr>
 }

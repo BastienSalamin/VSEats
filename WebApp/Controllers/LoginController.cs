@@ -13,8 +13,8 @@ namespace WebApp.Controllers
 
         private IUtilisateursManager UtilisateursManager { get; }
         private ILivreursManager LivreursManager { get; }
-        private ILocalitesManager LocalitesManager { get; set; }
-        private IPlatsManager PlatsManager { get; set; }
+        private ILocalitesManager LocalitesManager { get; }
+        private IPlatsManager PlatsManager { get; }
 
         public LoginController(IUtilisateursManager utilisateursManager, ILivreursManager livreursManager, ILocalitesManager localitesManager, IPlatsManager platsManager)
         {

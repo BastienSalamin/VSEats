@@ -11,7 +11,7 @@ namespace WebApp.Controllers
     public class SubscribeController : Controller
     {
         private IUtilisateursManager UtilisateursManager { get; }
-        public ILocalitesManager LocalitesManager { get; set; }
+        public ILocalitesManager LocalitesManager { get; }
 
         public SubscribeController(IUtilisateursManager utilisateursManager, ILocalitesManager localitesManager)
         {
